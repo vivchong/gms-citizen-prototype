@@ -32,7 +32,7 @@ export default function EventDetails() {
           className="pointer-events-none absolute inset-x-0 top-0 h-[716px] opacity-80"
           style={{
             background:
-              'radial-gradient(140% 90% at 100% 0%, #f89602 0%, #eb4c24 18%, #cf2612 32%, #b10000 42%, #0d0c0c 75%)',
+              'radial-gradient(140% 90% at 100% 0%, #f89602 0%, #f27113 15.459%, #eb4c24 30.919%, #cf2612 43.882%, #c11309 50.364%, #ba0a05 53.605%, #b20000 56.846%, #890303 67.634%, #600606 78.423%, #360909 89.211%, #220b0b 94.606%, #0d0c0c 100%)',
           }}
         />
 

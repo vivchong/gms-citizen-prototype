@@ -23,23 +23,10 @@ export default function BrowseEvents() {
     <div className="flex min-h-svh flex-col bg-[#0d0c0c] pb-16">
       <Masthead />
 
-      {/* Hero */}
-      <div className="relative h-[332px] w-full overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(120% 100% at 30% 20%, #7a3a1a 0%, #3d1f16 45%, #17110f 80%, #0d0c0c 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage:
-              'repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0 2px, transparent 2px 40px)',
-          }}
-        />
-        <div className="absolute inset-x-0 bottom-0 h-[267px] bg-gradient-to-t from-[#121212] via-[#121212]/55 via-50% to-[#121212]/0" />
+      {/* Hero — cover photo placeholder (real photo not available in this build environment) */}
+      <div className="relative h-[332px] w-full overflow-hidden bg-[#0d0c0c]">
+        <div className="absolute inset-x-0 top-0 h-[65px] bg-gradient-to-b from-[#0d0c0c] to-[rgba(13,12,12,0)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[267px] bg-gradient-to-t from-[#0d0c0c] via-[#0d0c0c]/55 via-50% to-[#0d0c0c]/0" />
 
         <button
           type="button"
@@ -85,21 +72,28 @@ export default function BrowseEvents() {
       </div>
 
       {/* Cards */}
-      <div className="flex w-full flex-1 flex-col gap-3 px-6 py-4">
-        <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
+      <div className="relative flex w-full flex-1 flex-col gap-3 overflow-hidden px-6 py-4">
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-[384px] opacity-30"
+          style={{
+            background:
+              'radial-gradient(75% 38% at 50% 100%, #9c2507 0%, #781f08 25%, #551a0a 50%, #31120b 75%, #1f0f0b 87.5%, #0d0c0c 100%)',
+          }}
+        />
+        <p className="relative text-[16px] font-semibold leading-6 text-[#b2aeae]">
           {events.length} event{events.length === 1 ? '' : 's'}
         </p>
-        <div className="flex w-full flex-col gap-3">
+        <div className="relative flex w-full flex-col gap-3">
           {events.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
           {events.length === 0 && (
             <p className="py-8 text-center text-[14px] text-[#928e8e]">
-              No events match “{query}”.
+              No events match "{query}".
             </p>
           )}
         </div>
-        <p className="w-full text-[12px] leading-5 text-[#928e8e]">
+        <p className="relative w-full text-[12px] leading-5 text-[#928e8e]">
           Cover photo by Team Nila. Photographer: TK Clickz
         </p>
       </div>
