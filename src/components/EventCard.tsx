@@ -8,11 +8,22 @@ export default function EventCard({ event }: { event: SportEvent }) {
       to={`/events/${event.id}`}
       className="relative flex w-full flex-col gap-3 rounded-[4px] bg-[var(--card-bg)] p-5 no-underline transition-colors hover:bg-white/10"
       style={{
-        border: '1px solid transparent',
-        borderImage:
-          'radial-gradient(80% 70% at 50% 100%, var(--border-light-flare-colour) 0%, var(--border-light-flare) 100%) 1',
+        border: '1px solid var(--border-light-flare)',
+        backgroundClip: 'padding-box',
       }}
     >
+      <div
+        className="pointer-events-none absolute inset-[-1px] rounded-[4px]"
+        style={{
+          background:
+            'radial-gradient(80% 70% at 50% 100%, var(--border-light-flare-colour) 0%, var(--border-light-flare) 100%)',
+          mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+          maskComposite: 'exclude',
+          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+          WebkitMaskComposite: 'xor',
+          padding: '1px',
+        }}
+      />
       <div className="w-full font-[family-name:var(--font-heading)] text-[18px] font-semibold leading-[26px] text-[#fa6938]">
         {event.category}
       </div>
