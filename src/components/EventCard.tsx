@@ -6,15 +6,13 @@ export default function EventCard({ event }: { event: SportEvent }) {
   return (
     <Link
       to={`/events/${event.id}`}
-      className="relative flex w-full flex-col gap-3 overflow-hidden rounded-[4px] border border-[var(--border-light-flare)] bg-[var(--card-bg)] p-5 no-underline transition-colors hover:bg-white/10"
+      className="relative flex w-full flex-col gap-3 rounded-[4px] bg-[var(--card-bg)] p-5 no-underline transition-colors hover:bg-white/10"
+      style={{
+        border: '1px solid transparent',
+        borderImage:
+          'radial-gradient(80% 70% at 50% 100%, var(--border-light-flare-colour) 0%, var(--border-light-flare) 100%) 1',
+      }}
     >
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px]"
-        style={{
-          background:
-            'radial-gradient(50% 100% at 50% 100%, var(--border-light-flare-colour) 0%, transparent 100%)',
-        }}
-      />
       <div className="w-full font-[family-name:var(--font-heading)] text-[18px] font-semibold leading-[26px] text-[#fa6938]">
         {event.category}
       </div>
