@@ -10,7 +10,7 @@ const tabs = [
 
 export default function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-1/2 flex h-16 w-full max-w-[var(--container-max)] -translate-x-1/2 items-center justify-between border-t border-[#554d4d] bg-[#0d0c0c] px-[var(--gutter)] py-2.5 shadow-[0_2px_4px_rgba(104,104,104,0.24)]">
+    <nav className="fixed bottom-0 left-1/2 z-20 flex h-16 w-full max-w-[var(--container-max)] -translate-x-1/2 items-center justify-between border-t border-[#554d4d] bg-[#0d0c0c] px-[var(--gutter)] py-2.5 shadow-[0_2px_4px_rgba(104,104,104,0.24)]">
       {tabs.map(({ label, icon: Icon, path }) => {
         const active = label === 'Explore'
         return (
