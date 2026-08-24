@@ -51,7 +51,7 @@ export default function EventDetails() {
               <div className="w-full text-[14px] leading-5 tracking-[0.12px]">
                 {event.sport.toUpperCase()}
               </div>
-              <div className="w-full text-[40px] leading-[48px] tracking-[-0.32px]">
+              <div className="w-full font-[family-name:var(--font-heading)] text-[40px] leading-[48px] tracking-[-0.32px]">
                 {event.category.toUpperCase()}
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function EventDetails() {
 
             <div className="flex w-full flex-col gap-8 rounded-[8px] border border-[#dc5d39] bg-white/5 p-5">
               <div className="flex w-full flex-col gap-4">
-                <h2 className="w-full text-[18px] font-bold leading-[26px] text-[#f9f9f9]">
+                <h2 className="w-full font-[family-name:var(--font-heading)] text-[18px] font-bold leading-[26px] text-[#f9f9f9]">
                   ELIGIBILITY
                 </h2>
                 <div className="flex w-full flex-col gap-2">
@@ -82,7 +82,7 @@ export default function EventDetails() {
               <div className="h-px w-full bg-[#554d4d]" />
 
               <div className="flex w-full flex-col gap-4">
-                <h2 className="w-full text-[18px] font-bold leading-[26px] text-[#f9f9f9]">
+                <h2 className="w-full font-[family-name:var(--font-heading)] text-[18px] font-bold leading-[26px] text-[#f9f9f9]">
                   HOW TO PARTICIPATE
                 </h2>
                 <Timeline steps={event.steps} />
@@ -91,7 +91,7 @@ export default function EventDetails() {
               <div className="h-px w-full bg-[#554d4d]" />
 
               <div className="flex w-full flex-col gap-3">
-                <h2 className="w-full text-[18px] font-bold leading-[26px] text-[#f9f9f9]">
+                <h2 className="w-full font-[family-name:var(--font-heading)] text-[18px] font-bold leading-[26px] text-[#f9f9f9]">
                   RULES &amp; REGULATIONS
                 </h2>
                 <a

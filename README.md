@@ -30,7 +30,8 @@ npm run preview
 ## Notes on fidelity
 
 - Icons are substituted 1:1 with [lucide-react](https://lucide.dev) equivalents (pin, calendar, chevron, search, sliders, home, compass, layers, user, external-link) — the exact Figma-exported SVGs weren't reachable from the build sandbox that generated this prototype.
-- The hero cover photo itself is missing (same limitation as above) — the browse screen shows a flat background instead of the real event photo, but the top vignette and bottom blur overlays, and the radial "flare" glow behind the event cards, use the exact gradient stops and colours from the Figma file. Drop a real image into `src/assets` and reference it in `src/pages/BrowseEvents.tsx` to restore the photo.
+- The hero cover photo (`src/assets/basketball-cover.png`) is the real photo, supplied directly.
 - All background gradients (the event-details hero flare and the browse-page card-area flare) use the exact colour stops from Figma; the event-details one couldn't be replicated with Figma's exact skewed gradient angle since CSS `radial-gradient` doesn't support arbitrary transforms, but the colours and general direction match.
+- Fonts match the Figma design tokens exactly. Body copy is **Hanken Grotesk** (loaded from Google Fonts). Headings are **Apfel Grotezk**, self-hosted from the licensed `.otf` files in `src/assets/fonts` (Regular/Mittel/Fett/Satt, `@font-face`'d in `src/index.css` at weights 400/500/600/700/800 — Mittel is registered under both 500 and 600 since there's no dedicated semibold cut). Space Grotesk remains as a fallback in `--font-heading` only in case those font files are ever unavailable.
 - Event data (all 6 basketball events) is mock data in `src/data/events.ts` — swap in real API data when available.
 - "Login with Singpass to register" and the sport filter are not wired to a real backend; the register button shows a placeholder alert.

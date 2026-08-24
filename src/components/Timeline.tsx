@@ -22,7 +22,7 @@ export default function Timeline({ steps }: { steps: TimelineStep[] }) {
               </div>
               <div className="flex flex-1 flex-col gap-4 pb-8">
                 <div className="flex w-full flex-col gap-2">
-                  <div className="w-full text-[18px] font-semibold leading-[26px] text-[#f9f9f9]">
+                  <div className="w-full font-[family-name:var(--font-heading)] text-[18px] font-semibold leading-[26px] text-[#f9f9f9]">
                     {step.title}
                   </div>
                   {step.badges && step.badges.length > 0 && (

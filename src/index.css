@@ -1,5 +1,46 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Apfel Grotezk";
+  src: url("./assets/fonts/ApfelGrotezk-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Apfel Grotezk";
+  src: url("./assets/fonts/ApfelGrotezk-Mittel.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mittel doubles as the 600 (semibold) face — there's no dedicated semibold cut. */
+@font-face {
+  font-family: "Apfel Grotezk";
+  src: url("./assets/fonts/ApfelGrotezk-Mittel.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Apfel Grotezk";
+  src: url("./assets/fonts/ApfelGrotezk-Fett.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Apfel Grotezk";
+  src: url("./assets/fonts/ApfelGrotezk-Satt.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #0d0c0c;
   --text-1: #f9f9f9;
@@ -12,6 +53,13 @@
   --primary: #fa6938;
   --card-bg: rgba(255, 255, 255, 0.05);
   --primary-subtlest: #001731;
+
+  /* Figma design tokens: font-family/Heading and font-family/Body.
+     Apfel Grotezk is self-hosted from the licensed .otf files in
+     src/assets/fonts (Regular/Mittel/Fett/Satt = 400/500-600/700/800).
+     Space Grotesk stays as a fallback in case those files are ever missing. */
+  --font-heading: "Apfel Grotezk", "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 * {
@@ -28,7 +76,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text-1);
-  font-family: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

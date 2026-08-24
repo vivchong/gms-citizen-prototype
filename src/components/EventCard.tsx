@@ -8,7 +8,7 @@ export default function EventCard({ event }: { event: SportEvent }) {
       to={`/events/${event.id}`}
       className="flex w-full flex-col gap-3 rounded-[4px] border border-[#dc5d39] bg-white/5 p-5 no-underline transition-colors hover:bg-white/10"
     >
-      <div className="w-full text-[18px] font-semibold leading-[26px] text-[#fa6938]">
+      <div className="w-full font-[family-name:var(--font-heading)] text-[18px] font-semibold leading-[26px] text-[#fa6938]">
         {event.category}
       </div>
       <div className="flex w-full flex-col gap-1">
