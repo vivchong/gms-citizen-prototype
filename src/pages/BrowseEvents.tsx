@@ -78,18 +78,14 @@ export default function BrowseEvents() {
       </div>
 
       {/* Cards */}
-      <div
-        className="relative flex w-full flex-1 flex-col gap-3 px-6 py-4"
-        style={{
-          backgroundImage:
-            'radial-gradient(92.1% 100% at 50% 100%, rgba(156, 37, 7, 0.30) 0%, rgba(13, 12, 12, 0.30) 100%)',
-          backgroundAttachment: 'fixed',
-          backgroundSize: '100% calc(100svh - 332px)',
-          backgroundPosition: 'bottom',
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: 'var(--bg)',
-        }}
-      >
+      <div className="relative flex w-full flex-1 flex-col gap-3 bg-[var(--bg)] px-6 py-4">
+        <div
+          className="pointer-events-none fixed inset-x-0 bottom-0 h-[calc(100svh-332px)] opacity-30"
+          style={{
+            background:
+              'radial-gradient(92.1% 100% at 50% 100%, var(--bg-light-flare-colour) 0%, var(--bg-light-flare-bg) 100%)',
+          }}
+        />
         <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
           {events.length} event{events.length === 1 ? '' : 's'}
         </p>
