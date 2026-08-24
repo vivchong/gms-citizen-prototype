@@ -33,9 +33,16 @@ export default function BrowseEvents() {
         />
         <div className="absolute inset-x-0 top-0 h-[20%] bg-gradient-to-b from-[#0d0c0c] to-[rgba(13,12,12,0)]" />
         <div
-          className="absolute inset-x-0 bottom-0 h-[80%] backdrop-blur-[4px]"
+          className="absolute inset-x-0 bottom-0 h-[80%]"
           style={{
             background: 'linear-gradient(0deg, #0D0C0C 0%, rgba(13, 12, 12, 0.55) 50%, rgba(13, 12, 12, 0.00) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-[50%] backdrop-blur-[8px]"
+          style={{
+            mask: 'linear-gradient(to top, black 0%, transparent 100%)',
+            WebkitMask: 'linear-gradient(to top, black 0%, transparent 100%)',
           }}
         />
 
