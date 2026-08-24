@@ -102,7 +102,7 @@ export default function BrowseEvents() {
       </div>
 
       {/* Cards */}
-      <div className="relative flex w-full flex-1 flex-col gap-3 bg-[var(--bg)] px-[var(--gutter)] py-4">
+      <div className="relative flex w-full flex-1 flex-col gap-3 px-[var(--gutter)] py-4">
         <div
           className="pointer-events-none absolute inset-0 opacity-30"
           style={{
