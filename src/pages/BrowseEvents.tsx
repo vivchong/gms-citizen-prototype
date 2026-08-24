@@ -101,15 +101,17 @@ export default function BrowseEvents() {
         </div>
       </div>
 
+      {/* Background gradient — fixed, fills viewport below hero */}
+      <div
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-0 h-[calc(100svh-var(--hero-height))] opacity-30"
+        style={{
+          background:
+            'radial-gradient(92.1% 100% at 50% 100%, var(--bg-light-flare-colour) 0%, var(--bg) 100%)',
+        }}
+      />
+
       {/* Cards */}
-      <div className="relative flex w-full flex-1 flex-col gap-3 bg-[var(--bg)] px-[var(--gutter)] py-4">
-        <div
-          className="pointer-events-none fixed inset-x-0 bottom-0 h-[calc(100svh-var(--hero-height))] opacity-30"
-          style={{
-            background:
-              'radial-gradient(92.1% 100% at 50% 100%, var(--bg-light-flare-colour) 0%, var(--bg) 100%)',
-          }}
-        />
+      <div className="relative z-10 flex w-full flex-1 flex-col gap-3 px-[var(--gutter)] py-4">
         <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
           {events.length} event{events.length === 1 ? '' : 's'}
         </p>
