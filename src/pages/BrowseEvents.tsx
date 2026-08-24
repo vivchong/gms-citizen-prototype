@@ -21,13 +21,7 @@ export default function BrowseEvents() {
   }, [query, sortByPrice])
 
   return (
-    <div
-      className="flex min-h-svh flex-col pb-16"
-      style={{
-        background:
-          'radial-gradient(92.1% 100% at 50% 100%, color-mix(in srgb, var(--bg-light-flare-colour) 30%, transparent) 0%, color-mix(in srgb, var(--bg-light-flare-bg) 30%, transparent) 100%), var(--bg)',
-      }}
-    >
+    <div className="flex min-h-svh flex-col bg-[var(--bg)] pb-16">
       <Masthead />
 
       {/* Hero */}
@@ -84,7 +78,14 @@ export default function BrowseEvents() {
       </div>
 
       {/* Cards */}
-      <div className="flex w-full flex-1 flex-col gap-3 px-6 py-4">
+      <div
+        className="flex w-full flex-1 flex-col gap-3 px-6 py-4"
+        style={{
+          minHeight: 'calc(100svh - 332px)',
+          background:
+            'radial-gradient(92.1% 100% at 50% 100%, rgba(156, 37, 7, 0.30) 0%, rgba(13, 12, 12, 0.30) 100%), var(--bg)',
+        }}
+      >
         <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
           {events.length} event{events.length === 1 ? '' : 's'}
         </p>
