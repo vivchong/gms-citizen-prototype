@@ -60,7 +60,7 @@ export default function EventDetails() {
               <div className="w-full text-center">{event.dateRange}</div>
             </div>
 
-            <div className="flex w-full flex-col gap-8 rounded-[8px] border border-[#dc5d39] bg-white/5 p-5">
+            <div className="flex w-full flex-col gap-8 rounded-[8px] border border-[var(--border-light-flare-colour)] bg-[var(--card-bg)] p-5">
               <div className="flex w-full flex-col gap-4">
                 <h2 className="w-full font-[family-name:var(--font-heading)] text-[18px] font-bold leading-[26px] text-[#f9f9f9]">
                   ELIGIBILITY

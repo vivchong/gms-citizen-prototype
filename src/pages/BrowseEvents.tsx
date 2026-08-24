@@ -25,7 +25,7 @@ export default function BrowseEvents() {
       className="flex min-h-svh flex-col pb-16"
       style={{
         background:
-          'radial-gradient(92.1% 100% at 50% 100%, rgba(156, 37, 7, 0.30) 0%, rgba(13, 12, 12, 0.30) 100%), #0d0c0c',
+          'radial-gradient(92.1% 100% at 50% 100%, color-mix(in srgb, var(--bg-light-flare-colour) 30%, transparent) 0%, color-mix(in srgb, var(--bg-light-flare-bg) 30%, transparent) 100%), var(--bg)',
       }}
     >
       <Masthead />

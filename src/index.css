@@ -53,15 +53,15 @@
   --text-subtlest-60: #928e8e;
   --border-40: #554d4d;
   --border-strong-50: #6d6666;
-  --border-light-flare: #dc5d39;
   --primary: #fa6938;
   --card-bg: rgba(255, 255, 255, 0.05);
   --primary-subtlest: #001731;
 
-  /* Figma design tokens: font-family/Heading and font-family/Body.
-     Apfel Grotezk is self-hosted from the licensed .otf files in
-     src/assets/fonts (Regular/Mittel/Fett/Satt = 400/500-600/700/800).
-     Space Grotesk stays as a fallback in case those files are ever missing. */
+  --bg-light-flare-colour: #9c2507;
+  --bg-light-flare-bg: #000000;
+  --border-light-flare-colour: #dc5d39;
+  --border-light-flare: var(--border-40);
+
   --font-heading: "Apfel Grotezk", "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
