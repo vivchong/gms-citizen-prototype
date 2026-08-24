@@ -21,7 +21,13 @@ export default function BrowseEvents() {
   }, [query, sortByPrice])
 
   return (
-    <div className="flex min-h-svh flex-col bg-[#0d0c0c] pb-16">
+    <div
+      className="flex min-h-svh flex-col pb-16"
+      style={{
+        background:
+          'radial-gradient(92.1% 100% at 50% 100%, rgba(156, 37, 7, 0.30) 0%, rgba(13, 12, 12, 0.30) 100%), #0d0c0c',
+      }}
+    >
       <Masthead />
 
       {/* Hero */}
@@ -78,18 +84,11 @@ export default function BrowseEvents() {
       </div>
 
       {/* Cards */}
-      <div className="relative flex w-full flex-1 flex-col gap-3 overflow-hidden px-6 py-4">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-30"
-          style={{
-            background:
-              'radial-gradient(75% 45% at 50% 100%, #9c2507 0%, #781f08 25%, #551a0a 50%, #31120b 75%, #1f0f0b 87.5%, #0d0c0c 100%)',
-          }}
-        />
-        <p className="relative text-[16px] font-semibold leading-6 text-[#b2aeae]">
+      <div className="flex w-full flex-1 flex-col gap-3 px-6 py-4">
+        <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
           {events.length} event{events.length === 1 ? '' : 's'}
         </p>
-        <div className="relative flex w-full flex-col gap-3">
+        <div className="flex w-full flex-col gap-3">
           {events.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
@@ -99,7 +98,7 @@ export default function BrowseEvents() {
             </p>
           )}
         </div>
-        <p className="relative w-full text-[12px] leading-5 text-[#928e8e]">
+        <p className="w-full text-[12px] leading-5 text-[#928e8e]">
           Cover photo by Team Nila. Photographer: TK Clickz
         </p>
       </div>
