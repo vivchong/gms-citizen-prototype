@@ -10,14 +10,14 @@ const tabs = [
 
 export default function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-1/2 flex h-16 w-full max-w-[480px] -translate-x-1/2 items-center justify-between border-t border-[#554d4d] bg-[#0d0c0c] px-6 py-2.5 shadow-[0_2px_4px_rgba(104,104,104,0.24)]">
+    <nav className="fixed bottom-0 left-1/2 flex h-16 w-full max-w-[var(--container-max)] -translate-x-1/2 items-center justify-between border-t border-[#554d4d] bg-[#0d0c0c] px-[var(--gutter)] py-2.5 shadow-[0_2px_4px_rgba(104,104,104,0.24)]">
       {tabs.map(({ label, icon: Icon, path }) => {
         const active = label === 'Explore'
         return (
           <Link
             key={label}
             to={path}
-            className="flex w-[73px] flex-col items-center gap-0.5"
+            className="flex flex-1 flex-col items-center gap-0.5"
             aria-current={active ? 'page' : undefined}
           >
             <Icon size={20} strokeWidth={2} color={active ? '#fa6938' : '#b2aeae'} />

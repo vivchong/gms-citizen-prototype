@@ -64,6 +64,24 @@
 
   --font-heading: "Apfel Grotezk", "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --container-max: 480px;
+  --gutter: clamp(16px, 5vw, 24px);
+  --hero-height: clamp(260px, 65vw, 332px);
+  --text-display: clamp(32px, 8vw + 4px, 40px);
+  --leading-display: clamp(38px, 9.5vw + 5px, 48px);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --container-max: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-max: 768px;
+  }
 }
 
 * {
@@ -86,7 +104,7 @@ body {
 }
 
 #root {
-  max-width: 480px;
+  max-width: var(--container-max);
   margin: 0 auto;
   min-height: 100svh;
   position: relative;

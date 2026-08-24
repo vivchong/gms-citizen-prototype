@@ -29,14 +29,14 @@ export default function EventDetails() {
 
       <div className="relative">
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-[716px] opacity-80"
+          className="pointer-events-none absolute inset-0 opacity-80"
           style={{
             background:
               'radial-gradient(140% 90% at 100% 0%, #f89602 0%, #f27113 15.459%, #eb4c24 30.919%, #cf2612 43.882%, #c11309 50.364%, #ba0a05 53.605%, #b20000 56.846%, #890303 67.634%, #600606 78.423%, #360909 89.211%, #220b0b 94.606%, #0d0c0c 100%)',
           }}
         />
 
-        <div className="relative flex flex-col gap-16 px-6 pb-8 pt-16">
+        <div className="relative flex flex-col gap-16 px-[var(--gutter)] pb-8 pt-16">
           <button
             type="button"
             onClick={() => navigate(-1)}
@@ -51,7 +51,7 @@ export default function EventDetails() {
               <div className="w-full text-[14px] leading-5 tracking-[0.12px]">
                 {event.sport.toUpperCase()}
               </div>
-              <div className="w-full font-[family-name:var(--font-heading)] text-[40px] leading-[48px] tracking-[-0.32px]">
+              <div className="w-full font-[family-name:var(--font-heading)] text-[length:var(--text-display)] leading-[var(--leading-display)] tracking-[-0.32px]">
                 {event.category.toUpperCase()}
               </div>
             </div>
@@ -115,7 +115,7 @@ export default function EventDetails() {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-1/2 flex w-full max-w-[480px] -translate-x-1/2 flex-col gap-4 border-t border-[#554d4d] bg-[#0d0c0c] p-6 shadow-[0_2px_4px_rgba(104,104,104,0.24)]">
+      <div className="fixed bottom-0 left-1/2 flex w-full max-w-[var(--container-max)] -translate-x-1/2 flex-col gap-4 border-t border-[#554d4d] bg-[#0d0c0c] px-[var(--gutter)] py-6 shadow-[0_2px_4px_rgba(104,104,104,0.24)]">
         <div className="flex w-full items-start gap-2">
           <div className="flex flex-1 flex-col gap-1">
             <p className="text-[22px] font-semibold leading-7 text-[#f9f9f9]">

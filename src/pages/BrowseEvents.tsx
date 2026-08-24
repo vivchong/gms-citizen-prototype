@@ -25,14 +25,19 @@ export default function BrowseEvents() {
       <Masthead />
 
       {/* Hero */}
-      <div className="relative h-[332px] w-full overflow-hidden bg-[#0d0c0c]">
+      <div className="relative h-[var(--hero-height)] w-full overflow-hidden bg-[#0d0c0c]">
         <img
           src={basketballCover}
           alt=""
           className="absolute inset-0 size-full object-cover"
         />
-        <div className="absolute inset-x-0 top-0 h-[65px] bg-gradient-to-b from-[#0d0c0c] to-[rgba(13,12,12,0)]" />
-        <div className="absolute inset-x-0 bottom-0 h-[267px] bg-gradient-to-t from-[#0d0c0c] via-[#0d0c0c]/55 via-50% to-[#0d0c0c]/0" />
+        <div className="absolute inset-x-0 top-0 h-[20%] bg-gradient-to-b from-[#0d0c0c] to-[rgba(13,12,12,0)]" />
+        <div
+          className="absolute inset-x-0 bottom-0 h-[80%] backdrop-blur-[4px]"
+          style={{
+            background: 'linear-gradient(0deg, #0D0C0C 0%, rgba(13, 12, 12, 0.55) 50%, rgba(13, 12, 12, 0.00) 100%)',
+          }}
+        />
 
         <button
           type="button"
@@ -44,15 +49,15 @@ export default function BrowseEvents() {
         </button>
 
         <div className="absolute inset-x-0 bottom-4 flex flex-col items-start gap-2">
-          <div className="flex w-full flex-col items-center px-6 text-center text-white drop-shadow-[0_0_4px_rgba(0,0,0,0.4)]">
+          <div className="flex w-full flex-col items-center px-[var(--gutter)] text-center text-white drop-shadow-[0_0_4px_rgba(0,0,0,0.4)]">
             <div className="w-full text-[12px] font-semibold leading-5 tracking-[0.12px]">
               {seasonLabel}
             </div>
-            <div className="w-full font-[family-name:var(--font-heading)] text-[40px] font-bold leading-[48px] tracking-[-0.32px]">
+            <div className="w-full font-[family-name:var(--font-heading)] text-[length:var(--text-display)] font-bold leading-[var(--leading-display)] tracking-[-0.32px]">
               {sportName.toUpperCase()}
             </div>
           </div>
-          <div className="flex w-full items-center justify-center gap-2 px-6">
+          <div className="flex w-full items-center justify-center gap-2 px-[var(--gutter)]">
             <div className="flex h-10 flex-1 items-center gap-2 rounded-[4px] border border-[#6d6666] bg-[#0d0c0c] p-3">
               <Search size={16} color="#b2aeae" />
               <input
@@ -78,9 +83,9 @@ export default function BrowseEvents() {
       </div>
 
       {/* Cards */}
-      <div className="relative flex w-full flex-1 flex-col gap-3 bg-[var(--bg)] px-6 py-4">
+      <div className="relative flex w-full flex-1 flex-col gap-3 bg-[var(--bg)] px-[var(--gutter)] py-4">
         <div
-          className="pointer-events-none fixed inset-x-0 bottom-0 h-[calc(100svh-332px)] opacity-30"
+          className="pointer-events-none fixed inset-x-0 bottom-0 h-[calc(100svh-var(--hero-height))] opacity-30"
           style={{
             background:
               'radial-gradient(92.1% 100% at 50% 100%, var(--bg-light-flare-colour) 0%, var(--bg-light-flare-bg) 100%)',
@@ -89,7 +94,7 @@ export default function BrowseEvents() {
         <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
           {events.length} event{events.length === 1 ? '' : 's'}
         </p>
-        <div className="flex w-full flex-col gap-3">
+        <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
           {events.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
