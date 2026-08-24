@@ -79,11 +79,15 @@ export default function BrowseEvents() {
 
       {/* Cards */}
       <div
-        className="flex w-full flex-1 flex-col gap-3 px-6 py-4"
+        className="relative flex w-full flex-1 flex-col gap-3 px-6 py-4"
         style={{
-          minHeight: 'calc(100svh - 332px)',
-          background:
-            'radial-gradient(92.1% 100% at 50% 100%, rgba(156, 37, 7, 0.30) 0%, rgba(13, 12, 12, 0.30) 100%), var(--bg)',
+          backgroundImage:
+            'radial-gradient(92.1% 100% at 50% 100%, rgba(156, 37, 7, 0.30) 0%, rgba(13, 12, 12, 0.30) 100%)',
+          backgroundAttachment: 'fixed',
+          backgroundSize: '100% calc(100svh - 332px)',
+          backgroundPosition: 'bottom',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: 'var(--bg)',
         }}
       >
         <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
