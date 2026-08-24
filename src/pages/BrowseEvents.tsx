@@ -11,9 +11,11 @@ export default function BrowseEvents() {
   const [sortByPrice, setSortByPrice] = useState(false)
 
   const events = useMemo(() => {
-    const filtered = basketballEvents.filter((event) =>
-      event.category.toLowerCase().includes(query.trim().toLowerCase()),
-    )
+    const filtered = basketballEvents
+      .filter((event) =>
+        event.category.toLowerCase().includes(query.trim().toLowerCase()),
+      )
+      .sort((a, b) => a.category.localeCompare(b.category))
     if (sortByPrice) {
       return [...filtered].sort((a, b) => a.price - b.price)
     }

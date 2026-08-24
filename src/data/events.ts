@@ -30,270 +30,91 @@ export type SportEvent = {
 export const sportName = 'Basketball'
 export const seasonLabel = 'PESTA SUKAN 2027'
 
-export const basketballEvents: SportEvent[] = [
+const defaultSteps: TimelineStep[] = [
   {
-    id: 'boys-u18-5v5',
+    title: 'Register your team and pay',
+    badges: [{ label: 'By 15 June 2027', tone: 'outline' }],
+    description:
+      'One person registers and pays for the team. This person becomes the team manager.',
+  },
+  {
+    title: 'Invite your team members',
+    badges: [
+      { label: 'By 30 June 2027', tone: 'outline' },
+      { label: 'NEW', tone: 'solid' },
+    ],
+    description:
+      'Share an invite link so your team members can submit their own details.\n\nYou can also enter their details for them.',
+  },
+  {
+    title: "Attend team manager's meeting",
+    description: 'Date to be announced.',
+  },
+  {
+    title: 'Play!',
+    description: "Schedule will be released after team manager's meeting.",
+  },
+]
+
+function makeEvent(
+  id: string,
+  category: string,
+  opts: Partial<Pick<SportEvent, 'location' | 'dateRange' | 'price' | 'priceUnit' | 'spotsLeft' | 'eligibility'>> = {},
+): SportEvent {
+  const is3x3 = category.includes('3x3')
+  return {
+    id,
     sport: 'Basketball',
-    category: "Boys' U18 5v5",
-    location: 'Clementi Sport Hall',
-    dateRange: '27 Jun to 2 Aug 2027',
-    price: 135,
-    priceUnit: 'per team',
+    category,
+    location: opts.location ?? 'Clementi Sport Hall',
+    dateRange: opts.dateRange ?? '27 Jun to 2 Aug 2027',
+    price: opts.price ?? (is3x3 ? 90 : 135),
+    priceUnit: opts.priceUnit ?? 'per team',
     registerBy: '15 June 2027',
-    spotsLeft: 6,
-    eligibility: {
-      team: ['5 to 10 members'],
+    spotsLeft: opts.spotsLeft ?? 8,
+    eligibility: opts.eligibility ?? {
+      team: is3x3 ? ['3 to 6 members'] : ['5 to 10 members'],
       participant: [
-        'Male',
-        'Under 18 years old (born 2010 or later)',
         'A Singapore citizen, permanent resident or foreigner with valid pass',
       ],
     },
-    steps: [
-      {
-        title: 'Register your team and pay',
-        badges: [{ label: 'By 15 June 2027', tone: 'outline' }],
-        description:
-          'One person registers and pays for the team. This person becomes the team manager.',
-      },
-      {
-        title: 'Invite your team members',
-        badges: [
-          { label: 'By 30 June 2027', tone: 'outline' },
-          { label: 'NEW', tone: 'solid' },
-        ],
-        description:
-          'Share an invite link so your team members can submit their own details.\n\nYou can also enter their details for them.',
-      },
-      {
-        title: "Attend team manager's meeting",
-        description: 'Date to be announced.',
-      },
-      {
-        title: 'Play!',
-        description: "Schedule will be released after team manager's meeting.",
-      },
-    ],
+    steps: defaultSteps,
     rulesUpdated: '9 Apr 2027, 4:27pm',
-  },
-  {
-    id: 'mens-corporate-5v5',
-    sport: 'Basketball',
-    category: "Men's Corporate 5v5",
-    location: 'Clementi Sport Hall',
-    dateRange: '27 Jun to 2 Aug 2027',
-    price: 135,
-    priceUnit: 'per team',
-    registerBy: '15 June 2027',
+  }
+}
+
+export const basketballEvents: SportEvent[] = [
+  makeEvent('boys-u10-3x3', "Boys' U10 3x3", { location: 'Toa Payoh Sports Hall', spotsLeft: 12 }),
+  makeEvent('boys-u12-3x3', "Boys' U12 3x3", { location: 'Toa Payoh Sports Hall', spotsLeft: 10 }),
+  makeEvent('boys-u14-3x3', "Boys' U14 3x3", { location: 'Toa Payoh Sports Hall', spotsLeft: 6 }),
+  makeEvent('boys-u16-3x3', "Boys' U16 3x3", { spotsLeft: 4 }),
+  makeEvent('boys-u18-3x3', "Boys' U18 3x3", { spotsLeft: 5 }),
+  makeEvent('boys-u23-5v5', "Boys' U23 5v5", { spotsLeft: 6 }),
+  makeEvent('girls-u10-3x3', "Girls' U10 3x3", { location: 'Jurong West Sports Hall', spotsLeft: 14 }),
+  makeEvent('girls-u12-3x3', "Girls' U12 3x3", { location: 'Jurong West Sports Hall', spotsLeft: 11 }),
+  makeEvent('girls-u14-3x3', "Girls' U14 3x3", { location: 'Jurong West Sports Hall', spotsLeft: 9 }),
+  makeEvent('girls-u16-3x3', "Girls' U16 3x3", { spotsLeft: 7 }),
+  makeEvent('girls-u18-3x3', "Girls' U18 3x3", { spotsLeft: 3 }),
+  makeEvent('girls-u23-5v5', "Girls' U23 5v5", { spotsLeft: 8 }),
+  makeEvent('mens-corporate-open-5v5', "Men's Corporate Open 5v5", {
     spotsLeft: 9,
     eligibility: {
       team: ['5 to 10 members', 'At least 70% Singapore citizens or permanent residents'],
-      participant: [
-        'Male',
-        'At least 18 years old',
-        'Currently employed, with an employer letter',
-      ],
+      participant: ['Male', 'At least 18 years old', 'Currently employed, with an employer letter'],
     },
-    steps: [
-      {
-        title: 'Register your team and pay',
-        badges: [{ label: 'By 15 June 2027', tone: 'outline' }],
-        description:
-          'One person registers and pays for the team. This person becomes the team manager.',
-      },
-      {
-        title: 'Invite your team members',
-        badges: [
-          { label: 'By 30 June 2027', tone: 'outline' },
-          { label: 'NEW', tone: 'solid' },
-        ],
-        description:
-          'Share an invite link so your team members can submit their own details.\n\nYou can also enter their details for them.',
-      },
-      {
-        title: "Attend team manager's meeting",
-        description: 'Date to be announced.',
-      },
-      {
-        title: 'Play!',
-        description: "Schedule will be released after team manager's meeting.",
-      },
-    ],
-    rulesUpdated: '9 Apr 2027, 4:27pm',
-  },
-  {
-    id: 'womens-open-5v5',
-    sport: 'Basketball',
-    category: "Women's Open 5v5",
-    location: 'Clementi Sport Hall',
-    dateRange: '27 June – 2 August 2027',
-    price: 15,
-    priceUnit: 'per person',
-    registerBy: '15 June 2027',
-    spotsLeft: 13,
-    eligibility: {
-      team: ['9 to 15 members', 'At least 70% Singapore citizens or permanent residents'],
-      participant: [
-        'Female',
-        'At least 13 years old (born 2014 or earlier)',
-        'A Singapore citizen, permanent resident or foreigner with valid pass',
-      ],
-    },
-    steps: [
-      {
-        title: 'Register your team and pay',
-        badges: [{ label: 'By 15 June 2027', tone: 'outline' }],
-        description:
-          'One person registers and pays for the team. This person becomes the team manager.',
-      },
-      {
-        title: 'Invite your team members',
-        badges: [
-          { label: 'By 30 June 2027', tone: 'outline' },
-          { label: 'NEW', tone: 'solid' },
-        ],
-        description:
-          'Share an invite link so your team members can submit their own details.\n\nYou can also enter their details for them.',
-      },
-      {
-        title: "Attend team manager's meeting",
-        description: 'Date to be announced.',
-      },
-      {
-        title: 'Play!',
-        description: "Schedule will be released after team manager's meeting.",
-      },
-    ],
-    rulesUpdated: '9 Apr 2027, 4:27pm',
-  },
-  {
-    id: 'boys-u15-3v3',
-    sport: 'Basketball',
-    category: "Boys' U15 3v3",
-    location: 'Toa Payoh Sports Hall',
-    dateRange: '10 Jul to 24 Jul 2027',
-    price: 90,
-    priceUnit: 'per team',
-    registerBy: '20 June 2027',
-    spotsLeft: 4,
-    eligibility: {
-      team: ['3 to 6 members'],
-      participant: [
-        'Male',
-        'Under 15 years old (born 2013 or later)',
-        'A Singapore citizen, permanent resident or foreigner with valid pass',
-      ],
-    },
-    steps: [
-      {
-        title: 'Register your team and pay',
-        badges: [{ label: 'By 20 June 2027', tone: 'outline' }],
-        description:
-          'One person registers and pays for the team. This person becomes the team manager.',
-      },
-      {
-        title: 'Invite your team members',
-        badges: [{ label: 'By 4 July 2027', tone: 'outline' }],
-        description:
-          'Share an invite link so your team members can submit their own details.\n\nYou can also enter their details for them.',
-      },
-      {
-        title: "Attend team manager's meeting",
-        description: 'Date to be announced.',
-      },
-      {
-        title: 'Play!',
-        description: "Schedule will be released after team manager's meeting.",
-      },
-    ],
-    rulesUpdated: '9 Apr 2027, 4:27pm',
-  },
-  {
-    id: 'girls-u18-5v5',
-    sport: 'Basketball',
-    category: "Girls' U18 5v5",
-    location: 'Jurong West Sports Hall',
-    dateRange: '3 Jul to 14 Aug 2027',
-    price: 135,
-    priceUnit: 'per team',
-    registerBy: '15 June 2027',
-    spotsLeft: 2,
-    eligibility: {
-      team: ['5 to 10 members'],
-      participant: [
-        'Female',
-        'Under 18 years old (born 2010 or later)',
-        'A Singapore citizen, permanent resident or foreigner with valid pass',
-      ],
-    },
-    steps: [
-      {
-        title: 'Register your team and pay',
-        badges: [{ label: 'By 15 June 2027', tone: 'outline' }],
-        description:
-          'One person registers and pays for the team. This person becomes the team manager.',
-      },
-      {
-        title: 'Invite your team members',
-        badges: [
-          { label: 'By 30 June 2027', tone: 'outline' },
-          { label: 'NEW', tone: 'solid' },
-        ],
-        description:
-          'Share an invite link so your team members can submit their own details.\n\nYou can also enter their details for them.',
-      },
-      {
-        title: "Attend team manager's meeting",
-        description: 'Date to be announced.',
-      },
-      {
-        title: 'Play!',
-        description: "Schedule will be released after team manager's meeting.",
-      },
-    ],
-    rulesUpdated: '9 Apr 2027, 4:27pm',
-  },
-  {
-    id: 'mixed-masters-5v5',
-    sport: 'Basketball',
-    category: 'Mixed Masters 5v5 (35+)',
-    location: 'Yio Chu Kang Sports Hall',
-    dateRange: '18 Jul to 8 Aug 2027',
-    price: 150,
-    priceUnit: 'per team',
-    registerBy: '25 June 2027',
-    spotsLeft: 7,
-    eligibility: {
-      team: ['5 to 10 members', 'At least 2 female players on court at all times'],
-      participant: [
-        'At least 35 years old (born 1992 or earlier)',
-        'A Singapore citizen, permanent resident or foreigner with valid pass',
-      ],
-    },
-    steps: [
-      {
-        title: 'Register your team and pay',
-        badges: [{ label: 'By 25 June 2027', tone: 'outline' }],
-        description:
-          'One person registers and pays for the team. This person becomes the team manager.',
-      },
-      {
-        title: 'Invite your team members',
-        badges: [{ label: 'By 9 July 2027', tone: 'outline' }],
-        description:
-          'Share an invite link so your team members can submit their own details.\n\nYou can also enter their details for them.',
-      },
-      {
-        title: "Attend team manager's meeting",
-        description: 'Date to be announced.',
-      },
-      {
-        title: 'Play!',
-        description: "Schedule will be released after team manager's meeting.",
-      },
-    ],
-    rulesUpdated: '9 Apr 2027, 4:27pm',
-  },
+  }),
+  makeEvent('mens-masters-40-5v5', "Men's Masters 40 5v5", { spotsLeft: 6 }),
+  makeEvent('mens-masters-45-5v5', "Men's Masters 45 5v5", { spotsLeft: 7 }),
+  makeEvent('mens-masters-50-5v5', "Men's Masters 50 5v5", { spotsLeft: 5 }),
+  makeEvent('mens-open-3x3', "Men's Open 3x3", { spotsLeft: 10 }),
+  makeEvent('mens-open-5v5', "Men's Open 5v5", { spotsLeft: 4 }),
+  makeEvent('wheelchair-mixed-open-3x3', "Wheelchair Mixed Open 3x3", {
+    location: 'OCBC Arena',
+    spotsLeft: 16,
+  }),
+  makeEvent('womens-masters-35-5v5', "Women's Masters 35 5v5", { spotsLeft: 11 }),
+  makeEvent('womens-open-3x3', "Women's Open 3x3", { spotsLeft: 13 }),
+  makeEvent('womens-open-5v5', "Women's Open 5v5", { spotsLeft: 8 }),
 ]
 
 export function getEventById(id: string) {
