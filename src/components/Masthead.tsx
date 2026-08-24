@@ -20,7 +20,7 @@ export default function Masthead() {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="w-full bg-[#161414] text-[12px] leading-5 text-[#f9f9f9]">
+    <div className="w-full bg-[#0d0c0c] text-[12px] leading-5 text-[#f9f9f9]">
       <div className="flex items-center gap-2 px-4 py-2">
         <SgCrest />
         <span>A Singapore Government Agency Website</span>
