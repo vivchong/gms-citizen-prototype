@@ -4,14 +4,7 @@ import { ChevronDown } from 'lucide-react'
 function SgCrest() {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-      <path
-        d="M9.5 3C7.5 3 6 4.5 6 6.5c0 1.2.6 2.3 1.5 3-.9.5-1.5 1.5-1.5 2.5 0 1.7 1.3 3 3 3h1c1.7 0 3-1.3 3-3 0-1-.6-2-1.5-2.5.9-.7 1.5-1.8 1.5-3C13 4.5 11.5 3 9.5 3z"
-        fill="#E53E3E"
-      />
-      <path
-        d="M9.5 4.5c-.4 0-.7.1-1 .3.5.3.8.8.8 1.4 0 .9-.7 1.6-1.6 1.6-.2 0-.4 0-.5-.1.1 1.3 1.1 2.3 2.3 2.3 1.3 0 2.3-1 2.3-2.3 0-1.3-1-2.3-2.3-2.3v-.9z"
-        fill="#C53030"
-      />
+      <circle cx="10" cy="10" r="8" fill="#E53E3E" />
     </svg>
   )
 }
@@ -28,7 +21,8 @@ export default function Masthead() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 px-4 pb-2 text-[#6B9FFF]"
+        className="flex items-center gap-1.5 pb-2 text-[#6B9FFF]"
+        style={{ paddingLeft: 'calc(1rem + 20px + 0.5rem)' }}
         aria-expanded={open}
       >
         How to identify
