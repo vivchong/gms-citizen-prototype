@@ -31,7 +31,12 @@ export default function BrowseEvents() {
           alt=""
           className="absolute inset-0 size-full object-cover object-[center_20%] sm:object-[center_30%]"
         />
-        <div className="absolute inset-x-0 top-0 h-[20%] bg-gradient-to-b from-[#0d0c0c] to-[rgba(13,12,12,0)]" />
+        <div
+          className="absolute inset-x-0 top-0 h-[20%]"
+          style={{
+            background: 'linear-gradient(0deg, rgba(13, 12, 12, 0.00) 0%, rgba(13, 12, 12, 0.50) 100%)',
+          }}
+        />
         <div
           className="absolute inset-x-0 bottom-0 h-[80%]"
           style={{
