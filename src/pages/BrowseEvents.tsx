@@ -102,12 +102,12 @@ export default function BrowseEvents() {
       </div>
 
       {/* Cards */}
-      <div className="relative flex w-full flex-1 flex-col gap-3 px-[var(--gutter)] py-4">
+      <div className="relative flex w-full flex-1 flex-col gap-3 bg-[var(--bg)] px-[var(--gutter)] py-4">
         <div
-          className="pointer-events-none absolute inset-0 opacity-30"
+          className="pointer-events-none fixed inset-x-0 bottom-0 h-[calc(100svh-var(--hero-height))] opacity-30"
           style={{
             background:
-              'radial-gradient(92.1% 50% at 50% 100%, var(--bg-light-flare-colour) 0%, var(--bg-light-flare-bg) 100%)',
+              'radial-gradient(92.1% 100% at 50% 100%, var(--bg-light-flare-colour) 0%, var(--bg) 100%)',
           }}
         />
         <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
