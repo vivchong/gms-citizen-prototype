@@ -104,7 +104,7 @@ export default function BrowseEvents() {
       {/* Cards */}
       <div className="relative flex w-full flex-1 flex-col gap-3 bg-[var(--bg)] px-[var(--gutter)] py-4">
         <div
-          className="pointer-events-none fixed inset-0 opacity-30"
+          className="pointer-events-none absolute inset-0 opacity-30"
           style={{
             background:
               'radial-gradient(92.1% 50% at 50% 100%, var(--bg-light-flare-colour) 0%, var(--bg-light-flare-bg) 100%)',
