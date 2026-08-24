@@ -7,10 +7,6 @@ export default function EventCard({ event }: { event: SportEvent }) {
     <Link
       to={`/events/${event.id}`}
       className="relative flex w-full flex-col gap-3 rounded-[4px] bg-[var(--card-bg)] p-5 no-underline transition-colors hover:bg-white/10"
-      style={{
-        border: '1px solid var(--border-light-flare)',
-        backgroundClip: 'padding-box',
-      }}
     >
       <div
         className="pointer-events-none absolute inset-[-1px] rounded-[4px]"
