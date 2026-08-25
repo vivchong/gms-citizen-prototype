@@ -1,4 +1,4 @@
-import { MapPin, Calendar } from 'lucide-react'
+import { MapPin, Calendar, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import type { SportEvent } from '../data/events'
 
@@ -31,6 +31,10 @@ export default function EventCard({ event }: { event: SportEvent }) {
         <div className="flex w-full items-center gap-3">
           <Calendar size={16} color="#b2aeae" />
           <span className="text-[14px] leading-5 text-[#b2aeae]">{event.dateRange}</span>
+        </div>
+        <div className="flex w-full items-center gap-3">
+          <Users size={16} color="#b2aeae" />
+          <span className="text-[14px] leading-5 text-[#b2aeae]">{event.ageRange}</span>
         </div>
       </div>
       <p className="text-[18px] leading-[26px]">
