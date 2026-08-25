@@ -9,19 +9,14 @@ import basketballCover from '../assets/basketball-cover.png'
 
 export default function BrowseEvents() {
   const [query, setQuery] = useState('')
-  const [sortByPrice, setSortByPrice] = useState(false)
 
   const events = useMemo(() => {
-    const filtered = basketballEvents
+    return basketballEvents
       .filter((event) =>
         event.category.toLowerCase().includes(query.trim().toLowerCase()),
       )
       .sort((a, b) => a.category.localeCompare(b.category))
-    if (sortByPrice) {
-      return [...filtered].sort((a, b) => a.price - b.price)
-    }
-    return filtered
-  }, [query, sortByPrice])
+  }, [query])
 
   return (
     <div className="flex min-h-svh flex-col bg-[var(--bg)] pb-16">
@@ -91,10 +86,8 @@ export default function BrowseEvents() {
             <Button
               variant="secondary"
               size="icon"
-              onClick={() => setSortByPrice((v) => !v)}
-              aria-pressed={sortByPrice}
-              title="Sort by price"
-              className={sortByPrice ? 'bg-[var(--primary)] text-[var(--bg)]' : ''}
+              title="Filters"
+              className="pointer-events-none"
             >
               <SlidersHorizontal size={16} />
             </Button>
