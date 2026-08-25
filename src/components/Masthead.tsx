@@ -9,11 +9,16 @@ function SgCrest() {
   )
 }
 
+/*
+ * SGDS Official Government Masthead, 48px tall.
+ * Colours come from the sgds/* tokens: bg-alternate, label/color-default,
+ * link/primary/color — so it flips correctly between light and dark.
+ */
 export default function Masthead() {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="w-full bg-[#0d0c0c] text-[12px] leading-5 text-[#f9f9f9]">
+    <div className="w-full bg-[var(--bg-alternate)] text-[12px] leading-5 text-[var(--label-default)]">
       <div className="flex flex-col gap-0 px-4 py-1">
         <div className="flex items-center gap-2">
           <SgCrest />
@@ -22,20 +27,24 @@ export default function Masthead() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="flex items-center gap-1.5 text-[#6B9FFF]"
+          className="flex items-center gap-1.5 text-[var(--link)]"
           style={{ paddingLeft: 'calc(20px + 0.5rem)' }}
           aria-expanded={open}
         >
           How to identify
-          <ChevronDown size={14} className={open ? 'rotate-180 transition-transform' : 'transition-transform'} />
+          <ChevronDown
+            size={14}
+            className={open ? 'rotate-180 transition-transform' : 'transition-transform'}
+          />
         </button>
       </div>
       {open && (
-        <div className="border-t border-[#554d4d] bg-[#161414] px-4 py-3 text-[12px] text-[#b2aeae]">
+        <div className="border-t border-[var(--border)] bg-[var(--bg-alternate)] px-4 py-3 text-[12px] text-[var(--text-subtler)]">
           <p>
-            Official websites end with <strong className="text-[#f9f9f9]">.gov.sg</strong>. Government agencies
-            communicate via <strong className="text-[#f9f9f9]">.gov.sg</strong> websites (e.g. go.gov.sg/open).{' '}
-            <a href="https://go.gov.sg/trusted-sites" className="text-[#fa6938] underline">
+            Official websites end with <strong className="text-[var(--text)]">.gov.sg</strong>.
+            Government agencies communicate via{' '}
+            <strong className="text-[var(--text)]">.gov.sg</strong> websites (e.g. go.gov.sg/open).{' '}
+            <a href="https://go.gov.sg/trusted-sites" className="text-[var(--primary)] underline">
               Trusted websites
             </a>
           </p>
