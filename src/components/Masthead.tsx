@@ -14,20 +14,22 @@ export default function Masthead() {
 
   return (
     <div className="w-full bg-[#0d0c0c] text-[12px] leading-5 text-[#f9f9f9]">
-      <div className="flex items-center gap-2 px-4 py-2">
-        <SgCrest />
-        <span>A Singapore Government Agency Website</span>
+      <div className="flex flex-col gap-0 px-4 py-1">
+        <div className="flex items-center gap-2">
+          <SgCrest />
+          <span>A Singapore Government Agency Website</span>
+        </div>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="flex items-center gap-1.5 text-[#6B9FFF]"
+          style={{ paddingLeft: 'calc(20px + 0.5rem)' }}
+          aria-expanded={open}
+        >
+          How to identify
+          <ChevronDown size={14} className={open ? 'rotate-180 transition-transform' : 'transition-transform'} />
+        </button>
       </div>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 pb-2 text-[#6B9FFF]"
-        style={{ paddingLeft: 'calc(1rem + 20px + 0.5rem)' }}
-        aria-expanded={open}
-      >
-        How to identify
-        <ChevronDown size={14} className={open ? 'rotate-180 transition-transform' : 'transition-transform'} />
-      </button>
       {open && (
         <div className="border-t border-[#554d4d] bg-[#161414] px-4 py-3 text-[12px] text-[#b2aeae]">
           <p>

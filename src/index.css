@@ -65,7 +65,7 @@
   --font-heading: "Apfel Grotezk", "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  --masthead-height: 56px;
+  --masthead-height: 48px;
   --container-max: 480px;
   --gutter: clamp(16px, 5vw, 24px);
   --hero-height: clamp(260px, 65vw, 332px);
