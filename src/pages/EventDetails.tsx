@@ -119,7 +119,7 @@ export default function EventDetails() {
               <a
                 href="#"
                 onClick={(e) => e.preventDefault()}
-                className="flex w-full items-center gap-2.5 rounded-[8px] border border-[#fa6938] bg-[#001731] p-4 no-underline"
+                className="flex w-full items-center gap-2.5 rounded-[8px] border border-[#fa6938] bg-[var(--primary-subtlest)] p-4 no-underline"
               >
                 <div className="flex flex-1 flex-col gap-2">
                   <p className="w-full text-[14px] font-semibold leading-5 text-[#f9f9f9]">
