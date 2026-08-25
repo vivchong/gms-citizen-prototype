@@ -98,12 +98,25 @@ background flare and the card border are `GRADIENT_RADIAL` paints on a **rotated
 CSS `radial-gradient()` cannot express a rotation — there is no approximation that lands on
 the design.
 
-Both are therefore rendered as **inline SVG data URIs** held in CSS custom properties:
+Both are therefore rendered as **inline SVG data URIs** held in CSS custom properties.
 
-| Property | Used by | Figma source |
-|---|---|---|
-| `--flare-image` | `.page-flare` | `2487:15186` (dark) / `2472:13991` (light) |
-| `--card-border-image` | `.gradient-ring` | `2487:15198` (dark) / `2472:14003` (light) |
+**Every gradient in the app is a complete spec in one variable — geometry AND stops.** That
+is deliberate: Figma's gradient *geometry* is per-mode data just as much as colour is, and a
+variable can carry stop colours but not an ellipse. So anything shape-different between modes
+gets overridden wholesale in the light block rather than recoloured. Never inline a gradient
+in a component; add a variable.
+
+| Property | Used by | Shape differs by mode? | Figma source |
+|---|---|---|---|
+| `--flare-image` | `.page-flare` | **yes** (different matrix + stop count) | `2487:15186` / `2472:13991` |
+| `--browse-flare-image` | Browse bg glow | **yes** (different centre + radii) | `2409:41349` / `2477:14930` |
+| `--card-border-image` | `.gradient-ring` | no (same matrix, different stops) | `2487:15198` / `2472:14003` |
+| `--browse-card-border-image` | `EventCard` ring | no (same matrix, token-bound stops) | `2409:41367` / `2477:14933` |
+| `--hero-scrim-top` / `-bottom` | Browse hero | no — hardcoded `#0d0c0c` in **both** Figma modes | `2409:41352-3` / `2477:14879-80` |
+
+Note the last row: the hero overlays are byte-identical across the two Figma frames, and they
+are the only reason the hero's white text stays readable in light mode. Don't tokenise them
+to a light value without re-tokenising the hero text at the same time.
 
 Two things to understand before touching these:
 
@@ -160,24 +173,35 @@ Known differences from Figma, both deliberate:
 
 ### 4.4 Light mode is not always a colour flip
 
-Three things differ **structurally** between the dark and light Figma frames. Each is
-absorbed by a token so component code stays theme-agnostic — don't "simplify" them back to
-`--bg` / `--primary`:
+Almost all of it is a straight token flip. Two things are not, and both are absorbed by
+tokens so component code stays theme-agnostic — don't "simplify" them back to `--bg`:
 
 - **The sport hero stays dark in light mode.** Compare `2409:41347` and `2477:14852`: photo,
   scrims, title and back link are identical; only the search input inside flips to white. So
   `--hero-bg` and `--bg-scrim-50/55` are deliberately **not** overridden under
   `[data-theme="light"]`. (An earlier pass had tokenised the hero to `--bg`, which turned it
   white and destroyed the type contrast.)
-- **The filter button flips shape**: outlined primary in dark → *filled* primary with a white
-  icon in light. Tokens `--filter-btn-bg` / `--filter-btn-icon` (+ `-active` variants, which
-  invert so the sort-active state still reads in both modes).
-- **The light sport listing has no background glow.** `BG LIGHT FLARE COLOUR` is bound on the
-  dark frame and absent from the light one. `--browse-flare-image` is `none` and
-  `--browse-flare-opacity` is `0` in light — switched off, not recoloured.
+- **The listing's background glow is a different ellipse per mode.** It's the `Content`
+  frame's radial fill — dark `2409:41349`, light `2477:14930`, paint opacity `0.3` in both.
+  Dark: centre `(50%, 100%)`, semi-axes `92.104% × 100%`. Light: centre `(50%, 85.285%)`,
+  semi-axes `93.375% × 85.285%`. Unlike the event-page flare, **both invert to axis-aligned
+  ellipses**, so plain CSS `radial-gradient()` is exact here — verified to 1/255 per channel
+  in the page gutters. Dark's stops are variable-bound; light's are hardcoded in Figma.
 
-Also fixed in this pass: the filter button's resting state was neutral grey, but both Figma
-frames show it primary-coloured. It is now primary in both modes.
+**Two mistakes made and corrected in this area — worth knowing about:**
+
+1. *A token missing from a frame's variable list means "not variable-bound here", never "not
+   present".* `BG LIGHT FLARE COLOUR` is absent from the light listing's variables, and an
+   earlier pass concluded the light listing had no glow and switched it off. It has one; the
+   paint is just hardcoded.
+2. *Don't read component fills off a rendered screenshot.* The filter button was implemented
+   as filled-primary-with-white-icon in light, from eyeballing a 390px-wide Figma export. The
+   plugin API says it's the design system's **Secondary button** (`Size=small, Type=icon
+   only`, `2409:41364` / `2477:14892`): fill = `Bg` token, stroke and icon = `Primary 50/60`,
+   40×40, radius 4 — a plain token flip. It's now `Button variant="secondary" size="icon"`.
+
+Also fixed along the way: the filter button's resting state had been neutral grey, where both
+Figma frames show it primary-coloured.
 
 ### 4.5 Fonts are fully self-hosted
 
@@ -234,11 +258,12 @@ Nothing is blocked. In rough priority order:
 2. **The bottom nav's "Explore" icon is a compass; Figma uses a magnifying glass** in both
    modes. Trivial swap in `BottomNav.tsx` (`Compass` → `Search`), left alone because it isn't
    a light-mode issue.
-3. **The Browse card's border gradient is still a CSS approximation.** `EventCard.tsx` uses
-   `radial-gradient(37.5% 50% at 50% 100%, …)`, written before the exact-SVG technique in
-   §4.2 existed. It reads correctly in both modes, but it has not been verified against the
-   real Figma paint the way the Event Details card border was. Worth redoing with the same
-   method if pixel-exactness matters there too.
+3. **The hero's progressive blur is an approximation.** Figma's `Bottom Blur` and
+   `Top Vignette + Blur` use `blurType: "PROGRESSIVE"` background blur, where the radius
+   ramps across the element (`0 → 8` from 31% down, and `4 → 0` on the top vignette).
+   `backdrop-filter` can't ramp, so `BrowseEvents.tsx` fakes it with masked blur layers. The
+   colour gradients underneath are exact; only the blur ramp is approximate. Needs a
+   multi-layer stack or a baked asset to go further.
 4. **Real icon assets.** Icons are lucide-react look-alikes (pin, calendar, chevron, search,
    sliders, home, compass, layers, user, external-link). The Cowork sandbox couldn't reach
    Figma's asset CDN. You can — pull the real SVGs via `get_design_context` /

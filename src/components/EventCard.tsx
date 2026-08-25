@@ -11,8 +11,7 @@ export default function EventCard({ event }: { event: SportEvent }) {
       <div
         className="pointer-events-none absolute inset-0 rounded-[var(--radius-sm)]"
         style={{
-          background:
-            'radial-gradient(37.5% 50% at 50% 100%, var(--border-light-flare-colour) 0%, var(--border-light-flare) 100%)',
+          background: 'var(--browse-card-border-image)',
           mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
           maskComposite: 'exclude',
           WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',

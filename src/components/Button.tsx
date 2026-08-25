@@ -3,6 +3,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react'
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode
   variant?: 'primary' | 'secondary'
+  size?: 'default' | 'icon'
   fullWidth?: boolean
 }
 
@@ -16,22 +17,34 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 export default function Button({
   children,
   variant = 'primary',
+  size = 'default',
   fullWidth = false,
   className = '',
   ...rest
 }: ButtonProps) {
   const base =
-    'inline-flex h-12 items-center justify-center gap-2.5 rounded-[var(--radius-button)] px-4 font-[family-name:var(--font-heading)] text-[length:var(--font-size-heading-xs)] font-semibold leading-[var(--line-height-heading-xs)] tracking-[var(--letter-spacing-heading-xs)] transition-opacity disabled:cursor-not-allowed disabled:opacity-50'
+    'inline-flex items-center justify-center gap-2.5 rounded-[var(--radius-button)] font-[family-name:var(--font-heading)] text-[length:var(--font-size-heading-xs)] font-semibold leading-[var(--line-height-heading-xs)] tracking-[var(--letter-spacing-heading-xs)] transition-opacity disabled:cursor-not-allowed disabled:opacity-50'
 
+  /* Size=small / Type=icon only is a fixed 40x40 in Figma — the component's
+     16px padding is overridden by the fixed frame size, so the 16px icon just
+     centres with a 12px effective inset. */
+  const sizes = {
+    default: 'h-12 px-4',
+    icon: 'size-10 shrink-0 p-0',
+  }
+
+  /* "Secondary button": fill = the Bg token, 1px INSIDE stroke and icon both
+     = Primary 50/60. Identical structure in both modes — only the token values
+     change (#0d0c0c/#fa6938 dark, #ffffff/#c72a00 light). */
   const variants = {
     primary: 'bg-[var(--primary)] text-[var(--bg)] hover:opacity-90 active:opacity-80',
     secondary:
-      'border border-[var(--border-strong)] bg-transparent text-[var(--text)] hover:border-[var(--primary)] hover:text-[var(--primary)]',
+      'border border-[var(--primary)] bg-[var(--bg)] text-[var(--primary)] hover:opacity-90 active:opacity-80',
   }
 
   return (
     <button
-      className={`${base} ${variants[variant]} ${fullWidth ? 'w-full' : ''} ${className}`}
+      className={`${base} ${sizes[size]} ${variants[variant]} ${fullWidth ? 'w-full' : ''} ${className}`}
       {...rest}
     >
       {children}

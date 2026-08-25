@@ -3,6 +3,7 @@ import { ChevronLeft, Search, SlidersHorizontal } from 'lucide-react'
 import Masthead from '../components/Masthead'
 import BottomNav from '../components/BottomNav'
 import EventCard from '../components/EventCard'
+import Button from '../components/Button'
 import { basketballEvents, seasonLabel, sportName } from '../data/events'
 import basketballCover from '../assets/basketball-cover.png'
 
@@ -35,9 +36,7 @@ export default function BrowseEvents() {
         />
         <div
           className="absolute inset-x-0 top-0 h-[20%]"
-          style={{
-            background: 'linear-gradient(0deg, transparent 0%, var(--bg-scrim-50) 100%)',
-          }}
+          style={{ background: 'var(--hero-scrim-top)' }}
         />
         <div
           className="absolute inset-x-0 top-0 h-[20%] backdrop-blur-[4px]"
@@ -48,10 +47,7 @@ export default function BrowseEvents() {
         />
         <div
           className="absolute inset-x-0 bottom-0 h-[80%]"
-          style={{
-            background:
-              'linear-gradient(0deg, var(--hero-bg) 0%, var(--bg-scrim-55) 50%, transparent 100%)',
-          }}
+          style={{ background: 'var(--hero-scrim-bottom)' }}
         />
         <div
           className="absolute inset-x-0 bottom-0 h-[50%] backdrop-blur-[8px]"
@@ -89,22 +85,19 @@ export default function BrowseEvents() {
                 className="w-full bg-transparent text-[16px] leading-6 text-[var(--text)] placeholder:text-[var(--text-subtler)] focus:outline-none"
               />
             </div>
-            {/* Resting state is Figma's: outlined primary in dark, filled primary
-                with a white icon in light. Toggling sort swaps the two so the
-                active state still reads, in either mode. */}
-            <button
-              type="button"
+            {/* Figma "Secondary button", Size=small / Type=icon only (2409:41364
+                dark, 2477:14892 light). Sort-active inverts the fill — Figma only
+                defines State=default, so that treatment is ours. */}
+            <Button
+              variant="secondary"
+              size="icon"
               onClick={() => setSortByPrice((v) => !v)}
               aria-pressed={sortByPrice}
               title="Sort by price"
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-[var(--primary)] ${
-                sortByPrice
-                  ? 'bg-[var(--filter-btn-bg-active)] text-[var(--filter-btn-icon-active)]'
-                  : 'bg-[var(--filter-btn-bg)] text-[var(--filter-btn-icon)]'
-              }`}
+              className={sortByPrice ? 'bg-[var(--primary)] text-[var(--bg)]' : ''}
             >
               <SlidersHorizontal size={16} />
-            </button>
+            </Button>
           </div>
         </div>
       </div>

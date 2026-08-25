@@ -102,9 +102,7 @@
   /* The sport hero (photo + title + search row) stays DARK in BOTH modes — that's
      what "Basketball – Light" (2477:14852) shows, since the type sits on a photo.
      So --hero-bg and the two scrims are deliberately NOT overridden in light. */
-  --hero-bg: #0d0c0c;
-  --bg-scrim-50: rgba(13, 12, 12, 0.50); /* Hero overlay scrim (50%)              */
-  --bg-scrim-55: rgba(13, 12, 12, 0.55); /* Hero overlay scrim (55%)              */
+  --hero-bg: #0d0c0c;                  /* the scrims themselves are --hero-scrim-* */
 
   /* ---- Text ---- */
   --text: #f9f9f9;                     /* Text/text (N1)                           */
@@ -146,24 +144,59 @@
   --border-light-flare-colour: #dc5d39;/* BORDER LIGHT FLARE COLOUR                */
   --border-light-flare: #554d4d;       /* BORDER LIGHT FLARE (= Border n-40)       */
 
-  /* Browse-page glow behind the event cards. `BG LIGHT FLARE COLOUR` is bound on
-     the dark sport frame (2409:41347) but absent from the light one
-     (2477:14852) — the light listing has no glow at all, so it's switched off
-     rather than recoloured. */
+  /* ==== GRADIENTS ========================================================
+     Every gradient in the app is a complete spec held in one variable —
+     geometry AND stops — because Figma's gradient geometry is per-mode data
+     just like colour is. A variable can carry stop colours but NOT the
+     ellipse, so anything shape-different between modes must be overridden
+     wholesale in the light block rather than recoloured.
+
+     Which ones actually differ in shape:
+       --flare-image              YES  (different matrix + stop count)
+       --browse-flare-image       YES  (different centre and radii)
+       --card-border-image        no   (same matrix, different stops)
+       --browse-card-border-image no   (same matrix, stops are token-bound)
+       --hero-scrim-*             no   (hardcoded #0d0c0c in BOTH Figma modes)
+
+     Geometry below is derived by inverting Figma's gradientTransform; see
+     README for the method and the pixel-level verification.
+     ---------------------------------------------------------------------- */
+
+  /* Listing background glow — "Content" frame fill, dark 2409:41349 /
+     light 2477:14930, paint opacity 0.3 in both. Both matrices invert to
+     AXIS-ALIGNED ellipses, so plain radial-gradient() is exact here (unlike
+     the event page's rotated flare, which needs SVG).
+     Dark: centre (50%, 100%), semi-axes 92.104% x 100%. Stops are
+     variable-bound in Figma, so they stay as tokens. */
   --browse-flare-image: radial-gradient(
-    92.1% 100% at 50% 100%,
+    92.104% 100% at 50% 100%,
     var(--bg-light-flare-colour) 0%,
     var(--bg-light-flare-bg) 100%
   );
   --browse-flare-opacity: 0.3;
 
-  /* Search-row filter button. Dark = outlined primary; light = filled primary
-     with a white icon (Icon/icon-inverse). A real per-mode difference in the
-     designs, not just a colour flip. */
-  --filter-btn-bg: transparent;
-  --filter-btn-icon: var(--primary);
-  --filter-btn-bg-active: var(--primary);
-  --filter-btn-icon-active: var(--icon-inverse);
+  /* Listing event-card border — Card stroke, dark 2409:41367 / light
+     2477:14933. 1px INSIDE. Identical matrix in both modes and both stops
+     are variable-bound, so one definition covers light and dark.
+     Centre (50%, 100%), semi-axes 43.777% x 75.329%. */
+  --browse-card-border-image: radial-gradient(
+    43.777% 75.329% at 50% 100%,
+    var(--border-light-flare-colour) 0%,
+    var(--border-light-flare) 100%
+  );
+
+  /* Sport hero overlays — "Top Vignette + Blur" and "Bottom Blur". These are
+     byte-identical in the dark and light Figma frames: hardcoded #0d0c0c with
+     no variable bindings. They are what keeps the hero readable with white
+     text in light mode, so do NOT tokenise them to a light value without
+     re-tokenising the hero text at the same time. */
+  --hero-scrim-top: linear-gradient(0deg, transparent 0%, rgba(13, 12, 12, 0.5) 100%);
+  --hero-scrim-bottom: linear-gradient(
+    0deg,
+    #0d0c0c 0%,
+    rgba(13, 12, 12, 0.55) 50%,
+    transparent 100%
+  );
 
   /* ---- Typography scale ---- */
   --font-heading: "Apfel Grotezk", "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -235,7 +268,7 @@
   --bg-warning-strong: #98590c;
   --card-bg: rgba(255, 255, 255, 0.95);
   --card-bg-hover: rgba(0, 0, 0, 0.04);
-  /* --hero-bg / --bg-scrim-* are intentionally NOT overridden: the hero stays dark. */
+  /* --hero-bg / --hero-scrim-* are intentionally NOT overridden: the hero stays dark. */
 
   --text: #2e2626;
   --text-subtle: #3f3737;
@@ -267,14 +300,22 @@
   --border-light-flare-colour: #f39875;
   --border-light-flare: #e1e0e0;
 
-  /* No card glow on the light sport listing — see the note in :root. */
-  --browse-flare-image: none;
-  --browse-flare-opacity: 0;
+  /* GRADIENTS — only the two that differ in SHAPE are overridden here. The
+     card border and the hero scrims are shape-identical across modes and are
+     defined once in :root (the card border's stops are token-bound, so it
+     follows the mode automatically).
 
-  --filter-btn-bg: var(--primary);
-  --filter-btn-icon: var(--icon-inverse);
-  --filter-btn-bg-active: transparent;
-  --filter-btn-icon-active: var(--primary);
+     Listing glow: centre (50%, 85.285%), semi-axes 93.375% x 85.285% — a
+     genuinely different ellipse from dark, not just different colours. Its
+     stops are hardcoded in Figma (2477:14930 has no boundVariables), which is
+     why `BG LIGHT FLARE COLOUR` never appears in that frame's variable list.
+     #fed9ae is NOT --bg-light-flare-colour (#e25623) — it's the second stop of
+     the event page's light flare, reused. */
+  --browse-flare-image: radial-gradient(
+    93.375% 85.285% at 50% 85.285%,
+    #fed9ae 0%,
+    #ffffff 100%
+  );
 
   /* Light flare: 3 stops ending in pure white, paint opacity 1, node at y=48
      (pushed down by the masthead — that offset is in the design, not a bug). */

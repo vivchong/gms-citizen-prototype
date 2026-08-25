@@ -66,6 +66,12 @@ it in the other.**
 
 ## Notes on fidelity
 
+- **Every gradient is a complete spec held in one CSS variable** — geometry *and* stops —
+  because Figma's gradient geometry is per-mode data just as much as colour is, and a
+  variable can carry stop colours but not an ellipse. Anything shape-different between modes
+  is overridden wholesale in the light block rather than recoloured; the rest is defined once
+  with token-bound stops. Gradients are never inlined in a component. The full inventory,
+  with which ones actually differ in shape, is in the `GRADIENTS` block of `src/index.css`.
 - **Both gradients on the event page are exact, not approximations.** Figma's background
   flare and the event card's border stroke are both `GRADIENT_RADIAL` paints on a *rotated*
   ellipse, which CSS `radial-gradient()` cannot express. They are instead rendered as inline
@@ -88,6 +94,11 @@ it in the other.**
 - Pills, the primary button and the Rules & Regulations box use 1px-reduced padding
   alongside their border, because Figma strokes are INSIDE-aligned and so don't add to the
   box size the way a CSS border does.
+- The listing's filter control is the design system's **Secondary button**
+  (`Size=small, Type=icon only`) — `Button` with `variant="secondary" size="icon"`. Fill is
+  the `Bg` token, with the 1px stroke and the icon both on `Primary 50/60`; that's a plain
+  token flip between modes. Figma only defines `State=default`, so the inverted fill used
+  for the sort-active state is ours, not the design's.
 - Icons are substituted 1:1 with [lucide-react](https://lucide.dev) equivalents (pin,
   calendar, chevron, search, sliders, home, compass, layers, user, external-link) — the
   exact Figma-exported SVGs weren't reachable from the build sandbox that generated this
@@ -101,17 +112,22 @@ it in the other.**
 
 ### Where light mode is not simply a colour flip
 
-Three things in the designs differ between modes structurally, not just by value. Each is
-handled with a token so component code stays theme-agnostic:
+Almost everything is a straight token flip. Two things aren't:
 
 - **The sport hero stays dark in light mode.** Photo, scrims, title and "Browse sports" are
   identical in both frames — only the search input inside it flips to white. Hence
   `--hero-bg` and `--bg-scrim-*` are deliberately *not* overridden under `[data-theme="light"]`.
-- **The search-row filter button flips shape, not just colour**: outlined primary in dark,
-  *filled* primary with a white icon (`Icon/icon-inverse`) in light. See `--filter-btn-*`.
-- **The light sport listing has no background glow.** `BG LIGHT FLARE COLOUR` is bound on the
-  dark frame and absent from the light one, so `--browse-flare-*` switches the glow off
-  rather than recolouring it.
+- **The listing's background glow is a different ellipse per mode**, not just different
+  colours: dark is centred at `(50%, 100%)` with semi-axes `92.104% × 100%`; light at
+  `(50%, 85.285%)` with `93.375% × 85.285%`. Both invert to axis-aligned ellipses, so plain
+  CSS `radial-gradient()` reproduces them exactly — unlike the event page's rotated flare.
+  See `--browse-flare-image`.
+
+> **A cautionary note on reading absence.** `BG LIGHT FLARE COLOUR` does not appear in the
+> light listing frame's variable list, and an earlier pass concluded from that the light
+> listing had no glow, and switched it off. Wrong: the light gradient is *hardcoded* in
+> Figma (`2477:14930` has no `boundVariables`), so it never shows up as a variable. A token
+> missing from a frame's variable list means "not variable-bound here", never "not present".
 
 ### Two token gaps worth raising with the designer
 
