@@ -7,6 +7,34 @@
     <meta name="description" content="Pesta Sukan 2027 — Games Management System citizen prototype" />
     <!-- Both typefaces are self-hosted from src/assets/fonts (see src/index.css) —
          no external font requests. -->
+    <!-- Resolve the theme before first paint so there's no flash of the wrong
+         palette. Mirrors src/theme.ts — keep the two in step. -->
+    <script>
+      (function () {
+        var mode = 'auto'
+        try {
+          var q = new URLSearchParams(location.search).get('theme')
+          if (q === 'light' || q === 'dark') {
+            mode = q
+            localStorage.setItem('gms-theme', q)
+          } else if (q === 'auto') {
+            localStorage.removeItem('gms-theme')
+          } else {
+            var s = localStorage.getItem('gms-theme')
+            if (s === 'light' || s === 'dark') mode = s
+          }
+        } catch (e) {
+          /* private mode / storage blocked — fall back to auto */
+        }
+        var resolved =
+          mode === 'auto'
+            ? matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark'
+            : mode
+        document.documentElement.setAttribute('data-theme', resolved)
+      })()
+    </script>
     <title>Pesta Sukan 2027 — GMS Citizen Prototype</title>
   </head>
   <body>

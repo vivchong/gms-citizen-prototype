@@ -26,8 +26,8 @@ export default function BrowseEvents() {
     <div className="flex min-h-svh flex-col bg-[var(--bg)] pb-16">
       <Masthead />
 
-      {/* Hero */}
-      <div className="relative h-[var(--hero-height)] w-full overflow-hidden bg-[var(--bg)]">
+      {/* Hero — stays dark in both modes (the type sits on the photo). */}
+      <div className="relative h-[var(--hero-height)] w-full overflow-hidden bg-[var(--hero-bg)]">
         <img
           src={basketballCover}
           alt=""
@@ -49,7 +49,8 @@ export default function BrowseEvents() {
         <div
           className="absolute inset-x-0 bottom-0 h-[80%]"
           style={{
-            background: 'linear-gradient(0deg, var(--bg) 0%, var(--bg-scrim-55) 50%, transparent 100%)',
+            background:
+              'linear-gradient(0deg, var(--hero-bg) 0%, var(--bg-scrim-55) 50%, transparent 100%)',
           }}
         />
         <div
@@ -88,13 +89,18 @@ export default function BrowseEvents() {
                 className="w-full bg-transparent text-[16px] leading-6 text-[var(--text)] placeholder:text-[var(--text-subtler)] focus:outline-none"
               />
             </div>
+            {/* Resting state is Figma's: outlined primary in dark, filled primary
+                with a white icon in light. Toggling sort swaps the two so the
+                active state still reads, in either mode. */}
             <button
               type="button"
               onClick={() => setSortByPrice((v) => !v)}
               aria-pressed={sortByPrice}
               title="Sort by price"
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[4px] border ${
-                sortByPrice ? 'border-[var(--primary)] text-[var(--primary)]' : 'border-[var(--border-strong)] text-[var(--text)]'
+              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-[var(--primary)] ${
+                sortByPrice
+                  ? 'bg-[var(--filter-btn-bg-active)] text-[var(--filter-btn-icon-active)]'
+                  : 'bg-[var(--filter-btn-bg)] text-[var(--filter-btn-icon)]'
               }`}
             >
               <SlidersHorizontal size={16} />
@@ -103,13 +109,14 @@ export default function BrowseEvents() {
         </div>
       </div>
 
-      {/* Background gradient — fixed, fills viewport below hero+masthead */}
+      {/* Background glow behind the cards — dark only; the light sport listing
+          has no flare at all (see --browse-flare-* in index.css). */}
       <div
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-0 opacity-30"
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-0"
         style={{
           top: 'calc(var(--hero-height) + var(--masthead-height))',
-          background:
-            'radial-gradient(92.1% 100% at 50% 100%, var(--bg-light-flare-colour) 0%, var(--bg) 100%)',
+          background: 'var(--browse-flare-image)',
+          opacity: 'var(--browse-flare-opacity)',
         }}
       />
 

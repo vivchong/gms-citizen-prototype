@@ -30,21 +30,39 @@ npm run preview
 ## Design tokens (light + dark)
 
 `src/index.css` carries the Flagship Design System Foundations token set as CSS custom
-properties. Values were read directly from Figma's variable definitions on **Event Page –
-Dark** (`2487:15185`) and **Event Page – Light** (`2472:13990`), plus the locally-modified
-tokens in `Modified Colours/{Dark,Light}.tokens.json`.
+properties. Values were read directly from Figma's variable definitions on all four
+reference frames — **Event Page** dark `2487:15185` / light `2472:13990` and **Basketball
+(sport listing)** dark `2409:41347` / light `2477:14852` — plus the locally-modified tokens
+in `Modified Colours/{Dark,Light}.tokens.json`.
 
-Dark is the default. Light mode lives under `:root[data-theme="light"]` and redefines only
-the values — every token name stays the same, so components never branch on theme.
+Only the *values* differ between modes; every token name is identical, so components never
+branch on theme.
 
-**To view light mode**, append `?theme=light` to the URL before the `#` route:
+### Three modes
+
+| Mode | Behaviour |
+|---|---|
+| `auto` | **Default.** Follows the device's light/dark setting, and keeps following it if the device setting changes mid-session. |
+| `light` | Forced light. |
+| `dark` | Forced dark. |
+
+Switch by putting `?theme=` in the URL **before** the `#` route:
 
 ```
 …/gms-citizen-prototype/?theme=light#/events/womens-open-5v5
+…/gms-citizen-prototype/?theme=dark#/
+…/gms-citizen-prototype/?theme=auto#/     ← back to following the device
 ```
 
-The choice is remembered in `localStorage`; `?theme=dark` switches back. No visible theme
+A forced choice is remembered in `localStorage`; `?theme=auto` clears it. No visible theme
 control is added, because there isn't one in the design.
+
+`auto` is always resolved to a concrete `data-theme="dark"|"light"` on `<html>` — by a small
+blocking script in `index.html`, so there's no flash of the wrong palette on first paint.
+That's why the stylesheet needs only a dark block and a light block rather than a duplicated
+`prefers-color-scheme` palette. `src/theme.ts` holds the same logic for runtime use and
+keeps `auto` in sync with the OS; **if you change the storage key or attribute in one, change
+it in the other.**
 
 ## Notes on fidelity
 
@@ -81,6 +99,20 @@ control is added, because there isn't one in the design.
 - "Login with Singpass to register" and the sport filter are not wired to a real backend;
   the register button shows a placeholder alert.
 
+### Where light mode is not simply a colour flip
+
+Three things in the designs differ between modes structurally, not just by value. Each is
+handled with a token so component code stays theme-agnostic:
+
+- **The sport hero stays dark in light mode.** Photo, scrims, title and "Browse sports" are
+  identical in both frames — only the search input inside it flips to white. Hence
+  `--hero-bg` and `--bg-scrim-*` are deliberately *not* overridden under `[data-theme="light"]`.
+- **The search-row filter button flips shape, not just colour**: outlined primary in dark,
+  *filled* primary with a white icon (`Icon/icon-inverse`) in light. See `--filter-btn-*`.
+- **The light sport listing has no background glow.** `BG LIGHT FLARE COLOUR` is bound on the
+  dark frame and absent from the light one, so `--browse-flare-*` switches the glow off
+  rather than recolouring it.
+
 ### Two token gaps worth raising with the designer
 
 1. The **outline/primary Pill's stroke** (`#c72a00` on the dark frame) is the only paint on
@@ -90,3 +122,7 @@ control is added, because there isn't one in the design.
 2. The **dark** event card's gradient stroke is hardcoded, while the **light** one is bound
    to `BORDER LIGHT FLARE COLOUR` / `BORDER LIGHT FLARE`. Only the light card would follow a
    mode switch inside Figma.
+3. `Text/text-inverse (N8)` resolves to **`#000000`** on the dark Event Page but **`#ffffff`**
+   on the dark sport listing. Same token, same mode, two values — so one of those frames is
+   on a stale library version. The code uses `#000000` for dark, matching the Event Page,
+   since that's the frame the "NEW" pill actually appears on.

@@ -76,11 +76,15 @@
 /* ==========================================================================
    DESIGN TOKENS — Flagship Design System Foundations
    Values pulled from Figma variable definitions on:
-     dark  → "Event Page – Dark"  (2487:15185)
-     light → "Event Page – Light" (2472:13990)
+     dark  → "Event Page – Dark"     (2487:15185) + "Basketball – Dark"  (2409:41347)
+     light → "Event Page – Light"    (2472:13990) + "Basketball – Light" (2477:14852)
    plus the locally-modified tokens in ./Modified Colours/{Dark,Light}.tokens.json
 
-   Dark is the default mode. Light is applied via [data-theme="light"] on <html>.
+   THREE MODES: auto (default, follows the device), light, dark.
+   A blocking script in index.html always resolves the choice to a concrete
+   data-theme="dark" | "light" on <html> before first paint, so this file only
+   ever needs two blocks — no duplicated prefers-color-scheme palette.
+   Switch with ?theme=auto | light | dark before the # route; see src/theme.ts.
    ========================================================================== */
 
 :root {
@@ -93,6 +97,12 @@
   --bg-warning: #251200;               /* Background/bg-warning                    */
   --bg-warning-strong: #ff9500;        /* Bg-warning-strong (w-70)                 */
   --card-bg: rgba(255, 255, 255, 0.05);/* card background                          */
+  --card-bg-hover: rgba(255, 255, 255, 0.10);
+
+  /* The sport hero (photo + title + search row) stays DARK in BOTH modes — that's
+     what "Basketball – Light" (2477:14852) shows, since the type sits on a photo.
+     So --hero-bg and the two scrims are deliberately NOT overridden in light. */
+  --hero-bg: #0d0c0c;
   --bg-scrim-50: rgba(13, 12, 12, 0.50); /* Hero overlay scrim (50%)              */
   --bg-scrim-55: rgba(13, 12, 12, 0.55); /* Hero overlay scrim (55%)              */
 
@@ -111,6 +121,7 @@
   --icon-strong: #e1e0e0;              /* Icon/icon-strongest (N1)                 */
   --icon-strongest: #f9f9f9;           /* Icon-strongest (n-100)                   */
   --icon-warning: #ff9500;             /* Icon-warning (warning-70)                */
+  --icon-inverse: #ffffff;             /* Icon/icon-inverse — #ffffff in BOTH modes */
 
   /* ---- Border ---- */
   --border: #554d4d;                   /* Border (n-40)                            */
@@ -135,6 +146,25 @@
   --border-light-flare-colour: #dc5d39;/* BORDER LIGHT FLARE COLOUR                */
   --border-light-flare: #554d4d;       /* BORDER LIGHT FLARE (= Border n-40)       */
 
+  /* Browse-page glow behind the event cards. `BG LIGHT FLARE COLOUR` is bound on
+     the dark sport frame (2409:41347) but absent from the light one
+     (2477:14852) — the light listing has no glow at all, so it's switched off
+     rather than recoloured. */
+  --browse-flare-image: radial-gradient(
+    92.1% 100% at 50% 100%,
+    var(--bg-light-flare-colour) 0%,
+    var(--bg-light-flare-bg) 100%
+  );
+  --browse-flare-opacity: 0.3;
+
+  /* Search-row filter button. Dark = outlined primary; light = filled primary
+     with a white icon (Icon/icon-inverse). A real per-mode difference in the
+     designs, not just a colour flip. */
+  --filter-btn-bg: transparent;
+  --filter-btn-icon: var(--primary);
+  --filter-btn-bg-active: var(--primary);
+  --filter-btn-icon-active: var(--icon-inverse);
+
   /* ---- Typography scale ---- */
   --font-heading: "Apfel Grotezk", "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -148,6 +178,7 @@
   --font-size-body-xs: 12px;      --line-height-body-xs: 16px;      --letter-spacing-body-xs: 0.12px;
 
   /* ---- Radii / elevation ---- */
+  --radius-sm: 4px;                    /* sm                                       */
   --radius-md: 8px;                    /* md                                       */
   --radius-full: 9999px;               /* full                                     */
   --radius-button: 4px;                /* Button/button-radius                     */
@@ -203,8 +234,8 @@
   --bg-warning: #fef9ea;
   --bg-warning-strong: #98590c;
   --card-bg: rgba(255, 255, 255, 0.95);
-  --bg-scrim-50: rgba(255, 255, 255, 0.50);
-  --bg-scrim-55: rgba(255, 255, 255, 0.55);
+  --card-bg-hover: rgba(0, 0, 0, 0.04);
+  /* --hero-bg / --bg-scrim-* are intentionally NOT overridden: the hero stays dark. */
 
   --text: #2e2626;
   --text-subtle: #3f3737;
@@ -235,6 +266,15 @@
   --bg-light-flare-bg: rgba(255, 255, 255, 0);
   --border-light-flare-colour: #f39875;
   --border-light-flare: #e1e0e0;
+
+  /* No card glow on the light sport listing — see the note in :root. */
+  --browse-flare-image: none;
+  --browse-flare-opacity: 0;
+
+  --filter-btn-bg: var(--primary);
+  --filter-btn-icon: var(--icon-inverse);
+  --filter-btn-bg-active: transparent;
+  --filter-btn-icon-active: var(--primary);
 
   /* Light flare: 3 stops ending in pure white, paint opacity 1, node at y=48
      (pushed down by the masthead — that offset is in the design, not a bug). */

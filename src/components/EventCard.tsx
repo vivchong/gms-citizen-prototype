@@ -6,10 +6,10 @@ export default function EventCard({ event }: { event: SportEvent }) {
   return (
     <Link
       to={`/events/${event.id}`}
-      className="relative flex w-full flex-col gap-3 rounded-[4px] bg-[var(--card-bg)] p-5 no-underline transition-colors hover:bg-white/10"
+      className="relative flex w-full flex-col gap-3 rounded-[var(--radius-sm)] bg-[var(--card-bg)] p-5 no-underline transition-colors hover:bg-[var(--card-bg-hover)]"
     >
       <div
-        className="pointer-events-none absolute inset-[-1px] rounded-[4px]"
+        className="pointer-events-none absolute inset-0 rounded-[var(--radius-sm)]"
         style={{
           background:
             'radial-gradient(37.5% 50% at 50% 100%, var(--border-light-flare-colour) 0%, var(--border-light-flare) 100%)',
