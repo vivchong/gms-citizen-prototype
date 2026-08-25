@@ -29,7 +29,7 @@ const tabs: Tab[] = [
 
 export default function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-1/2 z-20 flex h-16 w-full max-w-[var(--container-max)] -translate-x-1/2 items-center justify-between border-t border-[var(--border)] bg-[var(--bg)] px-[var(--gutter)] py-2.5 shadow-[var(--shadow-sm)]">
+    <nav className="fixed bottom-0 left-1/2 z-20 flex w-full max-w-[var(--container-max)] -translate-x-1/2 items-center justify-between border-t border-[var(--border)] bg-[var(--bg)] px-[var(--gutter)] pb-4 pt-3 shadow-[var(--shadow-sm)]">
       {tabs.map(({ label, icon, materialName, path }) => {
         const active = label === 'Sports'
         const colorClass = active ? 'text-[var(--primary)]' : 'text-[var(--icon)]'
