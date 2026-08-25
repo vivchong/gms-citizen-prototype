@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { ChevronLeft, ExternalLink } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Masthead from '../components/Masthead'
@@ -11,6 +12,8 @@ export default function EventDetails() {
   const { eventId } = useParams<{ eventId: string }>()
   const navigate = useNavigate()
   const event = eventId ? getEventById(eventId) : undefined
+
+  useEffect(() => { window.scrollTo(0, 0) }, [eventId])
 
   if (!event) {
     return (
