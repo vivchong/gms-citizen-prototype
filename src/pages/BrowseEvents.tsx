@@ -27,7 +27,7 @@ export default function BrowseEvents() {
       <Masthead />
 
       {/* Hero */}
-      <div className="relative h-[var(--hero-height)] w-full overflow-hidden bg-[#0d0c0c]">
+      <div className="relative h-[var(--hero-height)] w-full overflow-hidden bg-[var(--bg)]">
         <img
           src={basketballCover}
           alt=""
@@ -36,7 +36,7 @@ export default function BrowseEvents() {
         <div
           className="absolute inset-x-0 top-0 h-[20%]"
           style={{
-            background: 'linear-gradient(0deg, rgba(13, 12, 12, 0.00) 0%, rgba(13, 12, 12, 0.50) 100%)',
+            background: 'linear-gradient(0deg, transparent 0%, var(--bg-scrim-50) 100%)',
           }}
         />
         <div
@@ -49,7 +49,7 @@ export default function BrowseEvents() {
         <div
           className="absolute inset-x-0 bottom-0 h-[80%]"
           style={{
-            background: 'linear-gradient(0deg, #0D0C0C 0%, rgba(13, 12, 12, 0.55) 50%, rgba(13, 12, 12, 0.00) 100%)',
+            background: 'linear-gradient(0deg, var(--bg) 0%, var(--bg-scrim-55) 50%, transparent 100%)',
           }}
         />
         <div
@@ -79,13 +79,13 @@ export default function BrowseEvents() {
             </div>
           </div>
           <div className="flex w-full items-center justify-center gap-2 px-[var(--gutter)]">
-            <div className="flex h-10 flex-1 items-center gap-2 rounded-[4px] border border-[#6d6666] bg-[#0d0c0c] p-3">
-              <Search size={16} color="#b2aeae" />
+            <div className="flex h-10 flex-1 items-center gap-2 rounded-[4px] border border-[var(--border-strong)] bg-[var(--bg)] p-3">
+              <Search size={16} className="text-[var(--icon)]" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search by event name"
-                className="w-full bg-transparent text-[16px] leading-6 text-[#f9f9f9] placeholder:text-[#b2aeae] focus:outline-none"
+                className="w-full bg-transparent text-[16px] leading-6 text-[var(--text)] placeholder:text-[var(--text-subtler)] focus:outline-none"
               />
             </div>
             <button
@@ -94,7 +94,7 @@ export default function BrowseEvents() {
               aria-pressed={sortByPrice}
               title="Sort by price"
               className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[4px] border ${
-                sortByPrice ? 'border-[#fa6938] text-[#fa6938]' : 'border-[#6d6666] text-[#f9f9f9]'
+                sortByPrice ? 'border-[var(--primary)] text-[var(--primary)]' : 'border-[var(--border-strong)] text-[var(--text)]'
               }`}
             >
               <SlidersHorizontal size={16} />
@@ -115,7 +115,7 @@ export default function BrowseEvents() {
 
       {/* Cards */}
       <div className="relative z-10 flex w-full flex-1 flex-col gap-3 px-[var(--gutter)] py-4">
-        <p className="text-[16px] font-semibold leading-6 text-[#b2aeae]">
+        <p className="text-[16px] font-semibold leading-6 text-[var(--text-subtler)]">
           {events.length} event{events.length === 1 ? '' : 's'}
         </p>
         <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
@@ -123,12 +123,12 @@ export default function BrowseEvents() {
             <EventCard key={event.id} event={event} />
           ))}
           {events.length === 0 && (
-            <p className="py-8 text-center text-[14px] text-[#928e8e]">
+            <p className="py-8 text-center text-[14px] text-[var(--text-subtlest)]">
               No events match "{query}".
             </p>
           )}
         </div>
-        <p className="w-full text-[12px] leading-5 text-[#928e8e]">
+        <p className="w-full text-[12px] leading-5 text-[var(--text-subtlest)]">
           Cover photo by Team Nila. Photographer: TK Clickz
         </p>
       </div>

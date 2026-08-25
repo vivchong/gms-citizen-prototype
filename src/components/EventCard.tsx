@@ -20,26 +20,26 @@ export default function EventCard({ event }: { event: SportEvent }) {
           padding: '1px',
         }}
       />
-      <div className="w-full font-[family-name:var(--font-heading)] text-[18px] font-semibold leading-[26px] text-[#fa6938]">
+      <div className="w-full font-[family-name:var(--font-heading)] text-[18px] font-semibold leading-[26px] text-[var(--primary)]">
         {event.category}
       </div>
       <div className="flex w-full flex-col gap-1">
         <div className="flex w-full items-center gap-3">
-          <MapPin size={16} color="#b2aeae" />
-          <span className="text-[14px] leading-5 text-[#b2aeae]">{event.location}</span>
+          <MapPin size={16} className="text-[var(--icon)]" />
+          <span className="text-[14px] leading-5 text-[var(--text-subtler)]">{event.location}</span>
         </div>
         <div className="flex w-full items-center gap-3">
-          <Calendar size={16} color="#b2aeae" />
-          <span className="text-[14px] leading-5 text-[#b2aeae]">{event.dateRange}</span>
+          <Calendar size={16} className="text-[var(--icon)]" />
+          <span className="text-[14px] leading-5 text-[var(--text-subtler)]">{event.dateRange}</span>
         </div>
         <div className="flex w-full items-center gap-3">
-          <Users size={16} color="#b2aeae" />
-          <span className="text-[14px] leading-5 text-[#b2aeae]">{event.ageRange}</span>
+          <Users size={16} className="text-[var(--icon)]" />
+          <span className="text-[14px] leading-5 text-[var(--text-subtler)]">{event.ageRange}</span>
         </div>
       </div>
       <p className="text-[18px] leading-[26px]">
-        <span className="font-semibold text-[#f9f9f9]">${event.price}</span>{' '}
-        <span className="text-[16px] text-[#b2aeae]">{event.priceUnit}</span>
+        <span className="font-semibold text-[var(--text)]">${event.price}</span>{' '}
+        <span className="text-[16px] text-[var(--text-subtler)]">{event.priceUnit}</span>
       </p>
     </Link>
   )

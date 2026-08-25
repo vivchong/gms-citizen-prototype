@@ -93,6 +93,8 @@
   --bg-warning: #251200;               /* Background/bg-warning                    */
   --bg-warning-strong: #ff9500;        /* Bg-warning-strong (w-70)                 */
   --card-bg: rgba(255, 255, 255, 0.05);/* card background                          */
+  --bg-scrim-50: rgba(13, 12, 12, 0.50); /* Hero overlay scrim (50%)              */
+  --bg-scrim-55: rgba(13, 12, 12, 0.55); /* Hero overlay scrim (55%)              */
 
   /* ---- Text ---- */
   --text: #f9f9f9;                     /* Text/text (N1)                           */
@@ -201,6 +203,8 @@
   --bg-warning: #fef9ea;
   --bg-warning-strong: #98590c;
   --card-bg: rgba(255, 255, 255, 0.95);
+  --bg-scrim-50: rgba(255, 255, 255, 0.50);
+  --bg-scrim-55: rgba(255, 255, 255, 0.55);
 
   --text: #2e2626;
   --text-subtle: #3f3737;
