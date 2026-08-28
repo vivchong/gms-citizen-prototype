@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { ChevronLeft, ExternalLink } from 'lucide-react'
+import { ChevronLeft, External as ExternalLink } from '../components/icons'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Masthead from '../components/Masthead'
 import Pill from '../components/Pill'
@@ -31,7 +31,7 @@ export default function EventDetails() {
     return (
       <div className="flex min-h-svh flex-col items-center justify-center gap-4 bg-[var(--bg)] px-6 text-center text-[var(--text)]">
         <p>We couldn't find that event.</p>
-        <Link to="/" className="text-[var(--primary)] underline">
+        <Link to="/browse" className="text-[var(--primary)] underline">
           Back to browse events
         </Link>
       </div>
@@ -115,9 +115,10 @@ export default function EventDetails() {
                   RULES &amp; REGULATIONS
                 </h2>
                 <a
-                  href="https://www.activesgcircle.gov.sg/hubfs/GetActive%20Singapore/GetActive%20Singapore%202026/Rules%20and%20Regulations/Basketball/PS%20Basketball%20RR_18%20June%202026.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#"
+                  onClick={(e) => e.preventDefault()}
+                  /* 16px padding measured to the outer edge — Figma's stroke is
+                     INSIDE-aligned, so 15px padding + 1px border keeps the box at 73px. */
                   className="flex w-full items-center gap-2.5 rounded-[var(--radius-md)] border border-[var(--primary)] bg-[var(--bg-primary-subtlest)] p-[15px] no-underline"
                 >
                   <div className="flex min-w-0 flex-1 flex-col gap-2">

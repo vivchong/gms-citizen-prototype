@@ -1,4 +1,4 @@
-import { MapPin, Calendar, Users } from 'lucide-react'
+import { MapPin, Calendar, Users } from './icons'
 import { Link } from 'react-router-dom'
 import type { SportEvent } from '../data/events'
 

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ChevronLeft, Search, SlidersHorizontal } from 'lucide-react'
+import { ChevronLeft, Search, SlidersHorizontal } from '../components/icons'
 import Masthead from '../components/Masthead'
 import BottomNav from '../components/BottomNav'
 import EventCard from '../components/EventCard'
@@ -9,14 +9,19 @@ import basketballCover from '../assets/basketball-cover.png'
 
 export default function BrowseEvents() {
   const [query, setQuery] = useState('')
+  const [sortByPrice, setSortByPrice] = useState(false)
 
   const events = useMemo(() => {
-    return basketballEvents
+    const filtered = basketballEvents
       .filter((event) =>
         event.category.toLowerCase().includes(query.trim().toLowerCase()),
       )
       .sort((a, b) => a.category.localeCompare(b.category))
-  }, [query])
+    if (sortByPrice) {
+      return [...filtered].sort((a, b) => a.price - b.price)
+    }
+    return filtered
+  }, [query, sortByPrice])
 
   return (
     <div className="flex min-h-svh flex-col bg-[var(--bg)] pb-16">
@@ -86,8 +91,10 @@ export default function BrowseEvents() {
             <Button
               variant="secondary"
               size="icon"
-              title="Filters"
-              className="pointer-events-none"
+              onClick={() => setSortByPrice((v) => !v)}
+              aria-pressed={sortByPrice}
+              title="Sort by price"
+              className={sortByPrice ? 'bg-[var(--primary)] text-[var(--bg)]' : ''}
             >
               <SlidersHorizontal size={16} />
             </Button>

@@ -94,6 +94,8 @@
   --bg-strongest: #3f3737;             /* Bg-strongest (n-30)                      */
   --bg-inverse: #e1e0e0;               /* Background/bg-inverse (N1)               */
   --bg-primary-subtlest: #2a0e07;      /* Background/bg-primary-subtlest (AL6)     */
+  --bg-primary-subtler: #49180b;       /* Background/bg-primary-subtler (AL5)      */
+  --bg-strong: #1c1414;                /* Background/bg-strong (N7)                */
   --bg-warning: #251200;               /* Background/bg-warning                    */
   --bg-warning-strong: #ff9500;        /* Bg-warning-strong (w-70)                 */
   --card-bg: rgba(255, 255, 255, 0.05);/* card background                          */
@@ -120,9 +122,11 @@
   --icon-strongest: #f9f9f9;           /* Icon-strongest (n-100)                   */
   --icon-warning: #ff9500;             /* Icon-warning (warning-70)                */
   --icon-inverse: #ffffff;             /* Icon/icon-inverse — #ffffff in BOTH modes */
+  --icon-primary: #ec6538;             /* Icon/icon-primary (Pri)                  */
 
   /* ---- Border ---- */
   --border: #554d4d;                   /* Border (n-40)                            */
+  --border-n5: #2e2626;                /* Border/border (N5) — distinct from n-40  */
   --border-strong: #6d6666;            /* Border-strong (n-50)                     */
   --border-primary: #ec6538;           /* Border/border-primary (Pri)              */
   --border-warning: #9f5500;           /* Border/border-warning                    */
@@ -154,6 +158,7 @@
      Which ones actually differ in shape:
        --flare-image              YES  (different matrix + stop count)
        --browse-flare-image       YES  (different centre and radii)
+       --home-flare-image         YES  (different matrix, stops AND node height)
        --card-border-image        no   (same matrix, different stops)
        --browse-card-border-image no   (same matrix, stops are token-bound)
        --hero-scrim-*             no   (hardcoded #0d0c0c in BOTH Figma modes)
@@ -185,6 +190,22 @@
     var(--border-light-flare) 100%
   );
 
+  /* Home background flare — "Background" frame fill, dark 2501:18370 /
+     light 2501:18679. Another ROTATED ellipse (axes ~110 degrees apart), so SVG
+     rather than CSS radial-gradient. Note the node heights differ per mode
+     (798 dark / 514 light), hence --home-flare-height. Both start below the
+     masthead. Dark: 4 stops at paint opacity 0.8. */
+  --home-flare-height: 798px;
+  --home-flare-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 798' preserveAspectRatio='none'%3E%3Crect width='390' height='798' fill='url(%23h)' opacity='.8'/%3E%3Cdefs%3E%3CradialGradient id='h' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(41.4 55.929 -31.025 8.8788 -24 -18.745)'%3E%3Cstop offset='0' stop-color='rgb(248,150,2)'/%3E%3Cstop offset='.19606' stop-color='rgb(235,76,36)'/%3E%3Cstop offset='.408648' stop-color='rgb(178,0,0)'/%3E%3Cstop offset='1' stop-color='rgb(13,12,12)'/%3E%3C/radialGradient%3E%3C/defs%3E%3C/svg%3E");
+
+  /* Home "Notifications" pill and its Badge. Unbound in Figma in BOTH modes —
+     light changes base colour AND alpha, so these can't be one token. The dark
+     badge fill (#ff9083) has no variable binding at all; only the light one
+     (#d30000) does, so the dark badge wouldn't follow a Figma mode switch. */
+  --notif-bg: rgba(255, 255, 255, 0.15);
+  --notif-border: rgba(255, 255, 255, 0.2);
+  --badge-bg: #ff9083;
+
   /* Sport hero overlays — "Top Vignette + Blur" and "Bottom Blur". These are
      byte-identical in the dark and light Figma frames: hardcoded #0d0c0c with
      no variable bindings. They are what keeps the hero readable with white
@@ -202,6 +223,7 @@
   --font-heading: "Apfel Grotezk", "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
+  --font-size-heading-xxl: 48px;  --line-height-heading-xxl: 56px;  --letter-spacing-heading-xxl: -0.56px;
   --font-size-heading-xl: 40px;   --line-height-heading-xl: 48px;   --letter-spacing-heading-xl: -0.32px;
   --font-size-heading-sm: 22px;   --line-height-heading-sm: 28px;   --letter-spacing-heading-sm: 0.16px;
   --font-size-heading-xs: 18px;   --line-height-heading-xs: 26px;   --letter-spacing-heading-xs: 0.16px;
@@ -264,6 +286,8 @@
   --bg-strongest: #e1e0e0;
   --bg-inverse: #2e2626;
   --bg-primary-subtlest: #fef7f2;
+  --bg-primary-subtler: #fdece3;
+  --bg-strong: #f9f9f9;
   --bg-warning: #fef9ea;
   --bg-warning-strong: #98590c;
   --card-bg: rgba(255, 255, 255, 0.95);
@@ -283,8 +307,10 @@
   --icon-strong: #2e2626;
   --icon-strongest: #2e2626;
   --icon-warning: #d47800;
+  --icon-primary: #b93e1d;
 
   --border: #e1e0e0;
+  --border-n5: #e1e0e0;
   --border-strong: #b2aeae;
   --border-primary: #b93e1d;
   --border-warning: #d47800;
@@ -316,6 +342,14 @@
     #fed9ae 0%,
     #ffffff 100%
   );
+
+  /* Home flare: 3 stops, paint opacity 1, and a shorter node (514 vs 798). */
+  --home-flare-height: 514px;
+  --home-flare-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 514' preserveAspectRatio='none'%3E%3Crect width='390' height='514' fill='url(%23h)'/%3E%3Cdefs%3E%3CradialGradient id='h' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(30.65 37.76 -38.626 16.157 -69 -84.7)'%3E%3Cstop offset='0' stop-color='rgb(254,148,80)'/%3E%3Cstop offset='.301922' stop-color='rgb(254,217,174)'/%3E%3Cstop offset='1' stop-color='rgb(255,255,255)'/%3E%3C/radialGradient%3E%3C/defs%3E%3C/svg%3E");
+
+  --notif-bg: rgba(46, 38, 38, 0.05);
+  --notif-border: rgba(46, 38, 38, 0.1);
+  --badge-bg: #d30000;                 /* Background/bg-error-strong */
 
   /* Light flare: 3 stops ending in pure white, paint opacity 1, node at y=48
      (pushed down by the masthead — that offset is in the design, not a bug). */
@@ -394,6 +428,18 @@ a {
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
+}
+
+/* Per-mode assets. The Home screen's two SportSG logos are different files,
+   not one file recoloured, so the swap has to happen in markup. */
+.light-only {
+  display: none;
+}
+:root[data-theme="light"] .light-only {
+  display: revert;
+}
+:root[data-theme="light"] .dark-only {
+  display: none;
 }
 
 /* Page background flare — exact Figma paint, stretched to the layout width. */

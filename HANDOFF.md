@@ -4,25 +4,32 @@ Hand-off notes between the Claude (Cowork) session and a local Claude Code sessi
 in `~/Documents/GMS/Citizen_Prototype`. Read this before changing anything — it captures
 decisions and constraints that aren't obvious from the code.
 
-**Last updated:** after the light-mode refinement pass — three theme modes (auto/light/dark)
-and the Browse page reconciled against its light Figma frame.
+**Last updated:** Home screen complete in light and dark — real images wired in, filled
+warning icon, icon substitutions centralised, Basketball listing moved to `/browse`.
 
 ---
 
 ## 1. What this is
 
 A React + Vite prototype of the citizen-facing Games Management System (GMS) screens for
-Pesta Sukan 2027 (SportSG). Two screens exist:
+Pesta Sukan 2027 (SportSG). Three screens exist:
 
-- **Browse events** (`/`) — `src/pages/BrowseEvents.tsx`. **Considered finished by the
+- **Home** (`/`) — `src/pages/Home.tsx`. The bottom nav's first tab. Newest screen.
+- **Browse events** (`/browse`) — `src/pages/BrowseEvents.tsx`. **Considered finished by the
   designer.** Don't restyle it without being asked.
-- **Event details** (`/events/:eventId`) — `src/pages/EventDetails.tsx`. Just refined to
-  match Figma exactly (see §4).
+- **Event details** (`/events/:eventId`) — `src/pages/EventDetails.tsx`. Refined to match
+  Figma exactly (see §4).
+
+> **Routes moved when Home was added.** `/` used to be the Basketball listing; it is now
+> Home, and the listing lives at `/browse`. Any old bookmark to `…/#/` lands on Home.
 
 Figma source: `nlhBZQNIHe5BB7DyxNOWqs`, page **Handoff Screens** (`2019:10101`).
 
 | Frame | Node ID |
 |---|---|
+| Home – Dark ("FINAL", the reference for the build) | `2501:18369` |
+| Home – Light ("Your dashboard – Light", an OLDER design — see §4.5) | `2501:18678` |
+| Home background flare (dark / light) | `2501:18370` / `2501:18679` |
 | Event Page – Dark (the reference for the current build) | `2487:15185` |
 | Event Page – Light | `2472:13990` |
 | Event details card (dark / light) | `2487:15198` / `2472:14003` |
@@ -112,6 +119,7 @@ in a component; add a variable.
 | `--browse-flare-image` | Browse bg glow | **yes** (different centre + radii) | `2409:41349` / `2477:14930` |
 | `--card-border-image` | `.gradient-ring` | no (same matrix, different stops) | `2487:15198` / `2472:14003` |
 | `--browse-card-border-image` | `EventCard` ring | no (same matrix, token-bound stops) | `2409:41367` / `2477:14933` |
+| `--home-flare-image` | Home bg flare | **yes** (different matrix, stops AND node height) | `2501:18370` / `2501:18679` |
 | `--hero-scrim-top` / `-bottom` | Browse hero | no — hardcoded `#0d0c0c` in **both** Figma modes | `2409:41352-3` / `2477:14879-80` |
 
 Note the last row: the hero overlays are byte-identical across the two Figma frames, and they
@@ -203,7 +211,52 @@ tokens so component code stays theme-agnostic — don't "simplify" them back to 
 Also fixed along the way: the filter button's resting state had been neutral grey, where both
 Figma frames show it primary-coloured.
 
-### 4.5 Fonts are fully self-hosted
+### 4.5 The Home screen
+
+Built from the **dark** frame `2501:18369` ("FINAL"), 390×1255, with light mode derived from
+the tokens. Three things to know:
+
+**The two Figma Home frames are different designs, not a light/dark pair.** `2501:18678`
+("Your dashboard – Light") is 390×764 and an *older iteration*: different greeting copy
+("LET'S GO, RISSABELLA!"), no ActiveSG feature card, only one events card, and an extra
+Hyperlink row. Light mode here is the FINAL layout rendered with light token values, plus
+the light frame's real flare and notification-pill paints. If the designer refreshes the
+light frame, re-check it against `Home.tsx` rather than assuming parity.
+
+**The five raster images were exported by hand** — Figma's asset CDN is unreachable from
+both the build sandbox *and* the user's machine. They live in `src/assets` and are
+`import`ed (see `src/data/home.ts` for node IDs and sizes) so Vite fingerprints them.
+`AssetImage` still renders a neutral tile if one ever fails to load, but the tint is only
+painted on failure — otherwise it shows through transparent PNGs like the logo.
+
+> **The two SportSG logos are named for the background they sit on, not the artwork colour.**
+> `sportsg-logo-on-dark.png` is the **white** wordmark; `sportsg-logo-on-light.png` is the
+> **black** one. Both Figma nodes are named "SportSG Logo White …" (`2501:18375` and
+> `2501:18684`) and they are genuinely different assets, not one file recoloured — the first
+> export pair arrived swapped, which is exactly the trap the naming now guards against.
+
+Also note two of the five are `CROP` fills, so they must be exported as **nodes**, not as
+raw image fills, if they're ever re-exported.
+
+**Two Home-only paints are unbound in Figma in both modes** and so are per-mode variables:
+the notification pill (`--notif-bg` / `--notif-border` — light changes base colour *and*
+alpha) and the badge (`--badge-bg`). The dark badge fill `#ff9083` has no variable binding at
+all, so it wouldn't follow a Figma mode switch; only the light one (`#d30000`) does.
+
+### 4.6 Icons now live in one module
+
+`src/components/icons.tsx` re-exports every lucide-react substitute under **its Figma
+component name** (`ExclamationTriangle`, `Arrow`, `TabIcon`, `CardsStacked`, …). Every screen
+imports from there, so swapping in the real exported SVGs later is a one-file change. It also
+documents the imperfect matches — Figma's exclamation triangle is filled, lucide's is outline.
+
+**Code Connect was attempted and is not available on this file.** All eight unmapped
+components are icons (no Button/Pill/Card), and `send_code_connect_mappings` rejected every
+one with *"Published component not found"* — the icons come from a library that isn't
+published for Code Connect, and Code Connect needs an Organization/Enterprise plan. Don't
+retry it without checking those two prerequisites first.
+
+### 4.7 Fonts are fully self-hosted
 
 Both typefaces now live in `src/assets/fonts` and there are **no external font requests**;
 the Google Fonts `<link>` was removed from `index.html`.
@@ -264,15 +317,15 @@ Nothing is blocked. In rough priority order:
    `backdrop-filter` can't ramp, so `BrowseEvents.tsx` fakes it with masked blur layers. The
    colour gradients underneath are exact; only the blur ramp is approximate. Needs a
    multi-layer stack or a baked asset to go further.
-4. **Real icon assets.** Icons are lucide-react look-alikes (pin, calendar, chevron, search,
-   sliders, home, compass, layers, user, external-link). The Cowork sandbox couldn't reach
-   Figma's asset CDN. You can — pull the real SVGs via `get_design_context` /
-   `download_assets`. Note the external-link glyph is 15px inside a 20px box and is
-   `--primary`-coloured; the back chevron is 16px and `--icon-strong` (`#e1e0e0`).
+4. **Real icon assets.** Icons are lucide-react look-alikes, now centralised in
+   `src/components/icons.tsx` (§4.6) — replace the exports there and every screen follows.
+   Neither the Cowork sandbox nor the user's machine can reach Figma's asset CDN, so these
+   have to be exported by hand too. Note the external-link glyph is 15px inside a 20px box
+   and is `--primary`-coloured; the back chevron is 16px and `--icon-strong` (`#e1e0e0`).
 5. **The SG crest in `Masthead.tsx` is a placeholder red circle.** Replace with the real
    SGDS `sg-crest` asset.
-6. **More screens.** Homepage, Sport page and Your dashboard all have light/dark frames
-   ready in Figma (node IDs in §1). None are built.
+6. **More screens.** Sport page and Registrations/Profile have light/dark frames ready in
+   Figma (node IDs in §1). None are built; the last two bottom-nav tabs are inert buttons.
 7. **Backend.** "Login with Singpass to register" shows a `window.alert`; search/filter/sort
    run client-side over the mock array. No API integration exists.
 8. `public/icons.svg` is dead weight from an earlier approach — safe to delete once you've

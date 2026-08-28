@@ -64,6 +64,25 @@ That's why the stylesheet needs only a dark block and a light block rather than 
 keeps `auto` in sync with the OS; **if you change the storage key or attribute in one, change
 it in the other.**
 
+## Screens
+
+| Route | Screen | Figma |
+|---|---|---|
+| `/` | Home | `2501:18369` (dark, "FINAL") |
+| `/browse` | Basketball event listing | `2409:41347` / `2477:14852` |
+| `/events/:eventId` | Event details | `2487:15185` / `2472:13990` |
+
+The Home screen's five rasters live in `src/assets` and are imported (so Vite fingerprints
+them); node IDs and sizes are in the header comment of `src/data/home.ts`. Figma's asset CDN
+isn't reachable from the build environment, so they were exported by hand.
+
+The two SportSG logos are named for the **background** they sit on, not the colour of the
+artwork: `sportsg-logo-on-dark.png` is the white wordmark, `sportsg-logo-on-light.png` is the
+black one. Both Figma nodes are called "…White…", which makes this easy to get backwards.
+
+Icon substitutions all live in `src/components/icons.tsx`, exported under their Figma
+component names — replace the exports there and every screen picks up the real assets.
+
 ## Notes on fidelity
 
 - **Every gradient is a complete spec held in one CSS variable** — geometry *and* stops —

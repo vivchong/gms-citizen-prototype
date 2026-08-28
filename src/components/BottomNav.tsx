@@ -1,58 +1,60 @@
-import { User } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import { CardsStacked, House, Person, TabIcon } from './icons'
 
-function MaterialIcon({ name, className }: { name: string; className?: string }) {
-  return (
-    <span
-      className={`material-symbols-rounded ${className ?? ''}`}
-      style={{ fontSize: 20, lineHeight: 1 }}
-      aria-hidden="true"
-    >
-      {name}
-    </span>
-  )
-}
-
-type Tab = {
-  label: string
-  icon: 'material' | 'lucide'
-  materialName?: string
-  path: string
-}
-
-const tabs: Tab[] = [
-  { label: 'Home', icon: 'material', materialName: 'stadium', path: '/' },
-  { label: 'Sports', icon: 'material', materialName: 'search', path: '/' },
-  { label: 'Registrations', icon: 'material', materialName: 'cards_stack', path: '/' },
-  { label: 'Profile', icon: 'lucide', path: '/' },
-]
+/*
+ * Figma "Bottom nav" — 64px tall, px 24 / py 11, 20px icons, Body/XS labels
+ * (bold + primary when active). Registrations and Profile aren't built yet, so
+ * they render as inert buttons rather than links that go somewhere wrong.
+ */
+const tabs = [
+  { label: 'Home', icon: House, path: '/' },
+  { label: 'Explore', icon: TabIcon, path: '/browse' },
+  { label: 'Registrations', icon: CardsStacked, path: null },
+  { label: 'Profile', icon: Person, path: null },
+] as const
 
 export default function BottomNav() {
+  const { pathname } = useLocation()
+
+  const activeLabel =
+    pathname === '/' ? 'Home' : pathname.startsWith('/browse') || pathname.startsWith('/events') ? 'Explore' : ''
+
   return (
-    <nav className="fixed bottom-0 left-1/2 z-20 flex w-full max-w-[var(--container-max)] -translate-x-1/2 items-center justify-between border-t border-[var(--border)] bg-[var(--bg)] px-[var(--gutter)] pb-4 pt-3 shadow-[var(--shadow-sm)]">
-      {tabs.map(({ label, icon, materialName, path }) => {
-        const active = label === 'Sports'
-        const colorClass = active ? 'text-[var(--primary)]' : 'text-[var(--icon)]'
-        return (
-          <Link
-            key={label}
-            to={path}
-            className="flex flex-1 flex-col items-center gap-0.5"
-            aria-current={active ? 'page' : undefined}
-          >
-            {icon === 'material' ? (
-              <MaterialIcon name={materialName!} className={colorClass} />
-            ) : (
-              <User size={20} strokeWidth={2} className={colorClass} />
-            )}
+    <nav className="fixed bottom-0 left-1/2 z-20 flex h-16 w-full max-w-[var(--container-max)] -translate-x-1/2 items-start justify-between border-t border-[var(--border)] bg-[var(--bg)] px-[var(--page-gutter)] py-[11px] shadow-[var(--shadow-sm)]">
+      {tabs.map(({ label, icon: Icon, path }) => {
+        const active = label === activeLabel
+        const content = (
+          <>
+            <Icon
+              size={20}
+              strokeWidth={2}
+              className={active ? 'text-[var(--primary)]' : 'text-[var(--icon)]'}
+            />
             <span
-              className={`text-[12px] leading-5 ${
-                active ? 'font-bold text-[var(--primary)]' : 'font-normal text-[var(--text-subtler)]'
+              className={`w-full text-center text-[length:var(--font-size-body-xs)] leading-5 tracking-[var(--letter-spacing-body-xs)] ${
+                active ? 'font-bold text-[var(--primary)]' : 'font-normal text-[var(--icon)]'
               }`}
             >
               {label}
             </span>
+          </>
+        )
+
+        const className = 'flex w-[73px] shrink-0 flex-col items-center gap-0.5 no-underline'
+
+        return path ? (
+          <Link
+            key={label}
+            to={path}
+            className={className}
+            aria-current={active ? 'page' : undefined}
+          >
+            {content}
           </Link>
+        ) : (
+          <button key={label} type="button" className={className}>
+            {content}
+          </button>
         )
       })}
     </nav>
