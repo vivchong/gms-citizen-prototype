@@ -8,7 +8,7 @@
  *   sportsg-logo-on-light.png  Figma 2501:18684  "SportSG Logo White 3"  68x31
  *   team-basketball.png        Figma 2501:18396  "image 139"             75x40
  *   bike-adventure.png         Figma 2501:18420  "image 169"             53x40
- *   activesg-circle.png        Figma 2588:11763  "image 184"            310x79
+ *   activesg-circle.jpg        Figma 2588:11763  "image 184"            310x79
  *
  * The two logos are genuinely different assets, not one file recoloured — the
  * swap happens in markup via the .dark-only / .light-only helpers.
@@ -23,7 +23,7 @@ import logoDark from '../assets/sportsg-logo-on-dark.png'
 import logoLight from '../assets/sportsg-logo-on-light.png'
 import teamBasketball from '../assets/team-basketball.png'
 import bikeAdventure from '../assets/bike-adventure.png'
-import activesgCircle from '../assets/activesg-circle.png'
+import activesgCircle from '../assets/activesg-circle.jpg'
 
 export const homeImages = {
   logoDark,
