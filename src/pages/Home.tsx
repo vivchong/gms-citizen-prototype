@@ -27,7 +27,10 @@ function TaskCard({ task }: { task: ActionTask }) {
   return (
     <button
       type="button"
-      className="flex w-full flex-col justify-center gap-4 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-primary-subtlest)] p-4 text-left"
+      /* Task-card stroke is NOT one token resolving per mode: dark binds
+         Border (n-40) (grey), light binds Primary 50 and 60 (orange). See
+         --task-card-border. */
+      className="flex w-full flex-col justify-center gap-4 rounded-[var(--radius-sm)] border border-[var(--task-card-border)] bg-[var(--bg-primary-subtlest)] p-[15px] text-left"
     >
       <div className="flex w-full items-center gap-4">
         <div className="flex min-w-0 flex-1 flex-col gap-2">
@@ -76,7 +79,7 @@ function EventRow({ event }: { event: UpcomingEvent }) {
   return (
     <Link
       to="/browse"
-      className="relative flex w-full items-center gap-4 rounded-[var(--radius-sm)] bg-[var(--bg-strong)] p-4 no-underline"
+      className="relative flex w-full items-center gap-4 rounded-[var(--radius-sm)] bg-[var(--card-bg)] p-4 no-underline"
     >
       <div
         className="gradient-ring"
@@ -176,7 +179,7 @@ export default function Home() {
             href={featureCard.href}
             target="_blank"
             rel="noreferrer"
-            className="flex w-full flex-col gap-3 overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-strong)] p-[15px] no-underline"
+            className="flex w-full flex-col gap-3 overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--card-bg)] p-[15px] no-underline"
           >
             <AssetImage
               src={featureCard.image}

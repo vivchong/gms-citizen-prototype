@@ -213,6 +213,12 @@
   --notif-border: rgba(255, 255, 255, 0.2);
   --badge-bg: #ff9083;
 
+  /* Home task cards ("Ack indemnity" / "Add members"). Their stroke is not one
+     token resolving per mode — dark 2501:18385 binds Border (n-40), light
+     2501:18694 binds Primary 50 and 60. Grey border in dark, orange in light.
+     Probably a design inconsistency rather than intent; reproduced as-is. */
+  --task-card-border: var(--border);
+
   /* Sport hero overlays — "Top Vignette + Blur" and "Bottom Blur". These are
      byte-identical in the dark and light Figma frames: hardcoded #0d0c0c with
      no variable bindings. They are what keeps the hero readable with white
@@ -357,6 +363,7 @@
   --notif-bg: rgba(46, 38, 38, 0.05);
   --notif-border: rgba(46, 38, 38, 0.1);
   --badge-bg: #d30000;                 /* Background/bg-error-strong */
+  --task-card-border: var(--primary);  /* light binds Primary 50/60, not Border */
 
   /* Light flare: 3 stops ending in pure white, paint opacity 1, node at y=48
      (pushed down by the masthead — that offset is in the design, not a bug). */

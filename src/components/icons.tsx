@@ -12,16 +12,15 @@
  * Known imperfect matches:
  *   ExclamationTriangle — Figma's is a FILLED triangle (variant Fill=Yes);
  *                         lucide's TriangleAlert is outline only.
+ *
+ * The bottom nav does NOT go through here: those four are Material Symbols
+ * Rounded and use the real official glyphs — see MaterialIcon.tsx.
  */
 export {
   Bell,
   TriangleAlert as ExclamationTriangle,
   ArrowRight as Arrow,
   ExternalLink as External,
-  House,
-  Search as TabIcon,
-  Layers as CardsStacked,
-  User as Person,
   MapPin,
   Calendar,
   Users,

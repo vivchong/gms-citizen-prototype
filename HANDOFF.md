@@ -4,8 +4,8 @@ Hand-off notes between the Claude (Cowork) session and a local Claude Code sessi
 in `~/Documents/GMS/Citizen_Prototype`. Read this before changing anything — it captures
 decisions and constraints that aren't obvious from the code.
 
-**Last updated:** Home screen complete in light and dark — real images wired in, filled
-warning icon, icon substitutions centralised, Basketball listing moved to `/browse`.
+**Last updated:** Home screen complete in light and dark; bottom nav now uses real Material
+Symbols Rounded glyphs; Home cards on `card background` with a per-mode task-card stroke.
 
 ---
 
@@ -66,7 +66,8 @@ React 19 + TypeScript, Vite 8, **Tailwind CSS v4** via `@tailwindcss/vite`.
 > `src/index.css` as CSS custom properties, and components reference them with arbitrary
 > values like `text-[var(--text-subtle)]` / `text-[length:var(--font-size-body-md)]`.
 
-Also: `react-router-dom` v7, `lucide-react` for icons, `oxlint` (`npm run lint`).
+Also: `react-router-dom` v7, `lucide-react` for most icons (bottom nav uses real Material
+Symbols — see §4.6), `oxlint` (`npm run lint`).
 
 ---
 
@@ -246,6 +247,23 @@ painted on failure — otherwise it shows through transparent PNGs like the logo
 Also note two of the five are `CROP` fills, so they must be exported as **nodes**, not as
 raw image fills, if they're ever re-exported.
 
+**Two Home card mismatches between the dark and light frames**, both reproduced as-is and
+both worth confirming with the designer:
+
+1. **Task-card stroke is not one token resolving per mode.** Dark `2501:18385` binds
+   `Border (n-40)` (grey `#554d4d`); light `2501:18694` binds `Primary 50 and 60` (orange
+   `#c72a00`). Different tokens, not one token with two values — hence `--task-card-border`.
+2. **The `card background` migration is dark-only.** The designer moved the Your-events and
+   feature cards from `Background/bg-strong (N7)` to `card background`, but only on the dark
+   frame; light `2501:18727` still binds `bg-strong`. The code uses `--card-bg` for both,
+   following the stated intent — visually near-identical in light (`#ffffff` @ 0.95 vs
+   `#f9f9f9`), so it's safe either way.
+
+Also: `BORDER LIGHT FLARE` (`2409:41438`) is an **alias to `Border (n-40)`** in both modes,
+not its own colour — so the gradient stroke's end stop and the feature card's solid stroke
+move together if that token changes. And the "Reg details" inner panel has a stroke paint
+with `visible: false`, so it renders borderless despite carrying one.
+
 **Two Home-only paints are unbound in Figma in both modes** and so are per-mode variables:
 the notification pill (`--notif-bg` / `--notif-border` — light changes base colour *and*
 alpha) and the badge (`--badge-bg`). The dark badge fill `#ff9083` has no variable binding at
@@ -254,9 +272,21 @@ all, so it wouldn't follow a Figma mode switch; only the light one (`#d30000`) d
 ### 4.6 Icons now live in one module
 
 `src/components/icons.tsx` re-exports every lucide-react substitute under **its Figma
-component name** (`ExclamationTriangle`, `Arrow`, `TabIcon`, `CardsStacked`, …). Every screen
-imports from there, so swapping in the real exported SVGs later is a one-file change. It also
-documents the imperfect matches — Figma's exclamation triangle is filled, lucide's is outline.
+component name** (`ExclamationTriangle`, `Arrow`, …). Every screen imports from there, so
+swapping in the real exported SVGs later is a one-file change. It also documents the
+imperfect matches — Figma's exclamation triangle is filled, lucide's is outline.
+
+**The bottom nav is the exception: those four are the real thing.** They're Material Symbols
+Rounded (`home` / `home-fill`, `search`, `cards_stack`, `person`), copied as official SVGs
+from the `@material-symbols/svg-400` npm package into `src/assets/icons` — real glyph
+outlines, not lucide look-alikes. Home swaps to the FILL variant when it's the active tab.
+
+`MaterialIcon.tsx` paints them with `mask-image` + `background-color: currentColor` rather
+than `<img>`, so they still inherit the token colours. **The `url()` must stay quoted**: Vite
+inlines assets under 4 KB as `data:` URIs, and an unquoted data URI makes the declaration
+invalid — the browser drops `mask-image` silently and you get a solid block of colour. They
+are self-hosted deliberately; the full Material Symbols variable font is megabytes for four
+glyphs, and the app has no external font requests.
 
 **Code Connect was attempted and is not available on this file.** All eight unmapped
 components are icons (no Button/Pill/Card), and `send_code_connect_mappings` rejected every
@@ -332,7 +362,8 @@ Nothing is blocked. In rough priority order:
    `backdrop-filter` can't ramp, so `BrowseEvents.tsx` fakes it with masked blur layers. The
    colour gradients underneath are exact; only the blur ramp is approximate. Needs a
    multi-layer stack or a baked asset to go further.
-4. **Real icon assets.** Icons are lucide-react look-alikes, now centralised in
+4. **Real icon assets** for everything except the bottom nav (which already uses genuine
+   Material Symbols). The rest are lucide-react look-alikes, centralised in
    `src/components/icons.tsx` (§4.6) — replace the exports there and every screen follows.
    Neither the Cowork sandbox nor the user's machine can reach Figma's asset CDN, so these
    have to be exported by hand too. Note the external-link glyph is 15px inside a 20px box

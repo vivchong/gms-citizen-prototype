@@ -1,33 +1,44 @@
 import { Link, useLocation } from 'react-router-dom'
-import { CardsStacked, House, Person, TabIcon } from './icons'
+import MaterialIcon, { type MaterialIconName } from './MaterialIcon'
 
 /*
  * Figma "Bottom nav" — 64px tall, px 24 / py 11, 20px icons, Body/XS labels
- * (bold + primary when active). Registrations and Profile aren't built yet, so
- * they render as inert buttons rather than links that go somewhere wrong.
+ * (bold + primary when active). Icons are Material Symbols Rounded; Home uses
+ * the FILL variant when it's the active tab, the rest stay unfilled.
+ * Registrations and Profile aren't built yet, so they render as inert buttons
+ * rather than links that go somewhere wrong.
  */
-const tabs = [
-  { label: 'Home', icon: House, path: '/' },
-  { label: 'Explore', icon: TabIcon, path: '/browse' },
-  { label: 'Registrations', icon: CardsStacked, path: null },
-  { label: 'Profile', icon: Person, path: null },
-] as const
+const tabs: {
+  label: string
+  icon: MaterialIconName
+  activeIcon?: MaterialIconName
+  path: string | null
+}[] = [
+  { label: 'Home', icon: 'home', activeIcon: 'home-fill', path: '/' },
+  { label: 'Explore', icon: 'search', path: '/browse' },
+  { label: 'Registrations', icon: 'cards_stack', path: null },
+  { label: 'Profile', icon: 'person', path: null },
+]
 
 export default function BottomNav() {
   const { pathname } = useLocation()
 
   const activeLabel =
-    pathname === '/' ? 'Home' : pathname.startsWith('/browse') || pathname.startsWith('/events') ? 'Explore' : ''
+    pathname === '/'
+      ? 'Home'
+      : pathname.startsWith('/browse') || pathname.startsWith('/events')
+        ? 'Explore'
+        : ''
 
   return (
     <nav className="fixed bottom-0 left-1/2 z-20 flex h-16 w-full max-w-[var(--container-max)] -translate-x-1/2 items-start justify-between border-t border-[var(--border)] bg-[var(--bg)] px-[var(--page-gutter)] py-[11px] shadow-[var(--shadow-sm)]">
-      {tabs.map(({ label, icon: Icon, path }) => {
+      {tabs.map(({ label, icon, activeIcon, path }) => {
         const active = label === activeLabel
         const content = (
           <>
-            <Icon
+            <MaterialIcon
+              name={active && activeIcon ? activeIcon : icon}
               size={20}
-              strokeWidth={2}
               className={active ? 'text-[var(--primary)]' : 'text-[var(--icon)]'}
             />
             <span
