@@ -160,7 +160,8 @@
        --browse-flare-image       YES  (different centre and radii)
        --home-flare-image         YES  (different matrix, stops AND node height)
        --card-border-image        no   (same matrix, different stops)
-       --browse-card-border-image no   (same matrix, stops are token-bound)
+       --flare-border-image       no   (same matrix, stops are token-bound;
+                                        shared by the listing AND Home cards)
        --hero-scrim-*             no   (hardcoded #0d0c0c in BOTH Figma modes)
 
      Geometry below is derived by inverting Figma's gradientTransform; see
@@ -180,11 +181,17 @@
   );
   --browse-flare-opacity: 0.3;
 
-  /* Listing event-card border — Card stroke, dark 2409:41367 / light
-     2477:14933. 1px INSIDE. Identical matrix in both modes and both stops
-     are variable-bound, so one definition covers light and dark.
-     Centre (50%, 100%), semi-axes 43.777% x 75.329%. */
-  --browse-card-border-image: radial-gradient(
+  /* The shared "BORDER LIGHT FLARE" card stroke. 1px INSIDE, corner radius 4.
+     Verified byte-identical across BOTH screens and all card heights —
+     listing cards 2409:41367 / 2477:14933 (342x160) and Home event cards
+     2501:18418 / 2589:11784 / 2501:18727 (342x76 and 342x96) share one
+     gradientTransform and the same two variable bindings. Figma normalises the
+     transform to each node's own box, so the same definition sweeps correctly
+     at any card height — which is why this is one variable, not one per screen.
+     Centre (50%, 100%), semi-axes 43.777% x 75.329%.
+     NOTE the card FILL is not shared: listing cards use a translucent white
+     scrim (--card-bg), Home cards an opaque --bg-strong. */
+  --flare-border-image: radial-gradient(
     43.777% 75.329% at 50% 100%,
     var(--border-light-flare-colour) 0%,
     var(--border-light-flare) 100%
@@ -410,14 +417,17 @@ a {
 }
 
 /* 1px gradient ring that reproduces a Figma INSIDE-aligned gradient stroke.
-   The ring is painted with --card-border-image and masked to the outer 1px. */
+   Masked to the outer 1px, so it adds no layout height and inherits the
+   parent's corner radius. Defaults to the event-details card stroke; set
+   --ring-image on the element to use a different one, e.g. the shared
+   --flare-border-image on the listing and Home event cards. */
 .gradient-ring {
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1px;
   pointer-events: none;
-  background-image: var(--card-border-image);
+  background-image: var(--ring-image, var(--card-border-image));
   background-size: 100% 100%;
   background-repeat: no-repeat;
   -webkit-mask:

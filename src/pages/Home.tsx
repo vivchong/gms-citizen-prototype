@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import Masthead from '../components/Masthead'
 import BottomNav from '../components/BottomNav'
@@ -67,13 +68,21 @@ function TaskCard({ task }: { task: ActionTask }) {
   )
 }
 
-/* "RIBA" — p 16, gap 16, radius 4, border on BORDER LIGHT FLARE COLOUR. */
+/* "RIBA" — p 16, gap 16, radius 4. The stroke is the shared BORDER LIGHT FLARE
+   gradient, byte-identical to the sport-listing cards (same gradientTransform
+   and the same two variable bindings), so it reuses --flare-border-image rather
+   than being a flat --border-light-flare-colour edge. */
 function EventRow({ event }: { event: UpcomingEvent }) {
   return (
     <Link
       to="/browse"
-      className="flex w-full items-center gap-4 rounded-[var(--radius-sm)] border border-[var(--border-light-flare-colour)] bg-[var(--bg-strong)] p-4 no-underline"
+      className="relative flex w-full items-center gap-4 rounded-[var(--radius-sm)] bg-[var(--bg-strong)] p-4 no-underline"
     >
+      <div
+        className="gradient-ring"
+        style={{ '--ring-image': 'var(--flare-border-image)' } as CSSProperties}
+        aria-hidden
+      />
       <AssetImage src={event.image} alt="" className="size-10 shrink-0 rounded-[var(--radius-sm)]" />
       <div className="flex min-w-0 flex-1 flex-col">
         <p className={`w-full font-semibold text-[var(--primary)] ${bodyMd}`}>{event.title}</p>

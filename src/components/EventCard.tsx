@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { MapPin, Calendar, Users } from './icons'
 import { Link } from 'react-router-dom'
 import type { SportEvent } from '../data/events'
@@ -8,16 +9,11 @@ export default function EventCard({ event }: { event: SportEvent }) {
       to={`/events/${event.id}`}
       className="relative flex w-full flex-col gap-3 rounded-[var(--radius-sm)] bg-[var(--card-bg)] p-5 no-underline transition-colors hover:bg-[var(--card-bg-hover)]"
     >
+      {/* Shared BORDER LIGHT FLARE stroke — same definition as the Home event cards */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-[var(--radius-sm)]"
-        style={{
-          background: 'var(--browse-card-border-image)',
-          mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          maskComposite: 'exclude',
-          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          padding: '1px',
-        }}
+        className="gradient-ring"
+        style={{ '--ring-image': 'var(--flare-border-image)' } as CSSProperties}
+        aria-hidden
       />
       <div className="w-full font-[family-name:var(--font-heading)] text-[18px] font-semibold leading-[26px] text-[var(--primary)]">
         {event.category}

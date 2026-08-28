@@ -118,7 +118,7 @@ in a component; add a variable.
 | `--flare-image` | `.page-flare` | **yes** (different matrix + stop count) | `2487:15186` / `2472:13991` |
 | `--browse-flare-image` | Browse bg glow | **yes** (different centre + radii) | `2409:41349` / `2477:14930` |
 | `--card-border-image` | `.gradient-ring` | no (same matrix, different stops) | `2487:15198` / `2472:14003` |
-| `--browse-card-border-image` | `EventCard` ring | no (same matrix, token-bound stops) | `2409:41367` / `2477:14933` |
+| `--flare-border-image` | `EventCard` + Home event cards | no (same matrix, token-bound stops) | `2409:41367` / `2477:14933` + `2501:18418` / `2501:18727` |
 | `--home-flare-image` | Home bg flare | **yes** (different matrix, stops AND node height) | `2501:18370` / `2501:18679` |
 | `--hero-scrim-top` / `-bottom` | Browse hero | no — hardcoded `#0d0c0c` in **both** Figma modes | `2409:41352-3` / `2477:14879-80` |
 
@@ -137,6 +137,14 @@ Two things to understand before touching these:
 2. **`preserveAspectRatio="none"` is load-bearing.** Figma computes the gradient in
    normalised (square) space and *then* stretches it to the node's aspect ratio. Stretching
    the SVG non-uniformly reproduces that. Don't "fix" it to `meet`.
+
+**`--flare-border-image` is one stroke shared by two screens.** The sport-listing event cards
+and the Home "YOUR EVENTS" cards carry a byte-identical `gradientTransform` and the same two
+variable bindings, across three different card heights (76, 96, 160). Figma normalises a
+gradient transform to the node's own box, so one definition sweeps correctly at any height —
+don't fork it per screen. `.gradient-ring` takes `--ring-image` to pick which stroke to
+paint, defaulting to the event-details card's. Their *fills* are NOT shared: listing cards
+use the translucent `--card-bg` scrim, Home cards an opaque `--bg-strong`.
 
 The card border is a **1px INSIDE-aligned stroke**, reproduced by `.gradient-ring` — an
 `inset-0` overlay with `padding: 1px` and `mask-composite: exclude`, so it contributes no
