@@ -286,10 +286,17 @@ the Google Fonts `<link>` was removed from `index.html`.
   Basketball events with eligibility copy taken from the actual rules PDF, so the rendered
   page is ~10px shorter than the 1827px Figma frame. That is expected; don't "fix" it by
   changing spacing.
-- **Never trust Figma codegen for gradients or strokes.** Use the plugin API, or
-  `get_variable_defs` for token values. Codegen also emits stale fallback values inside
-  `var(…)` — the light flare's codegen output described a completely different 10-stop
-  gradient than the node actually has.
+- **Never trust Figma codegen for any paint — not just gradients.** Use the plugin API, or
+  `get_variable_defs` for token values. Three separate failures so far:
+  1. It flattened the event card's *gradient* stroke to `1px solid #dc5d39` (its first stop).
+  2. The light flare's codegen described a completely different 10-stop gradient than the
+     node actually has — stale fallback values inside `var(…)`.
+  3. On the Home feature card (`2575:4943`) it reported a *solid* stroke as
+     `--border-strong-(n-50)` / `#6d6666` when it is bound to `Border (n-40)` / `#554d4d` —
+     the wrong token name **and** a hex belonging to the other token.
+- **`Border (n-40)` and `Border/border (N5)` are the same hex in light (`#e1e0e0`)** and only
+  diverge in dark (`#554d4d` vs `#2e2626`). You cannot tell which one a node uses from a
+  light-mode screenshot — check the binding.
 
 ---
 

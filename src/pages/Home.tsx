@@ -168,12 +168,15 @@ export default function Home() {
             ))}
           </section>
 
-          {/* Feature card — p 16, gap 12, radius 4 */}
+          {/* Feature card — gap 12, radius 4. Stroke binds to Border (n-40), not
+              Border-strong; Figma codegen misreported this one. 15px padding +
+              1px border keeps the box at Figma's size, since its stroke is
+              INSIDE-aligned. */}
           <a
             href={featureCard.href}
             target="_blank"
             rel="noreferrer"
-            className="flex w-full flex-col gap-3 overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[var(--bg-strong)] p-4 no-underline"
+            className="flex w-full flex-col gap-3 overflow-hidden rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--bg-strong)] p-[15px] no-underline"
           >
             <AssetImage
               src={featureCard.image}
