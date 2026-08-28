@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import Masthead from '../components/Masthead'
 import BottomNav from '../components/BottomNav'
 import AssetImage from '../components/AssetImage'
-import { Arrow, Bell, ExclamationTriangle, External } from '../components/icons'
+import { Arrow, ExclamationTriangle, External } from '../components/icons'
+import MaterialIcon from '../components/MaterialIcon'
 import {
   actionTasks,
   featureCard,
@@ -139,7 +140,11 @@ export default function Home() {
                 aria-label="Notifications, 1 unread"
                 className="relative flex size-10 shrink-0 items-center justify-center rounded-[20px] border border-[var(--notif-border)] bg-[var(--notif-bg)]"
               >
-                <Bell size={24} className="text-[var(--icon-strongest)]" />
+                <MaterialIcon
+                  name="notifications"
+                  size={24}
+                  className="text-[var(--icon-strongest)]"
+                />
                 <span className="absolute left-[26px] top-[-4px] flex h-4 min-w-5 items-center justify-center rounded-[var(--radius-full)] bg-[var(--badge-bg)] px-1.5 text-[12px] font-bold leading-4 text-[var(--text-inverse)]">
                   1
                 </span>

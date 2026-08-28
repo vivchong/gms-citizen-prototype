@@ -5,6 +5,7 @@ import homeFillUrl from '../assets/icons/home-fill.svg'
 import searchUrl from '../assets/icons/search.svg'
 import cardsStackUrl from '../assets/icons/cards_stack.svg'
 import personUrl from '../assets/icons/person.svg'
+import notificationsUrl from '../assets/icons/notifications.svg'
 
 /*
  * Material Symbols Rounded, self-hosted.
@@ -24,6 +25,7 @@ const icons = {
   search: searchUrl,
   cards_stack: cardsStackUrl,
   person: personUrl,
+  notifications: notificationsUrl,
 } as const
 
 export type MaterialIconName = keyof typeof icons

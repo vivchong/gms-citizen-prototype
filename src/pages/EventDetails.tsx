@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { ChevronLeft, External as ExternalLink } from '../components/icons'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Masthead from '../components/Masthead'
@@ -21,11 +20,8 @@ const bodyXs =
 export default function EventDetails() {
   const { eventId } = useParams<{ eventId: string }>()
   const navigate = useNavigate()
+  // Scroll reset is handled globally by <ScrollToTop /> in App.tsx.
   const event = eventId ? getEventById(eventId) : undefined
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [eventId])
 
   if (!event) {
     return (

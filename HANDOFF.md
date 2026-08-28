@@ -276,10 +276,12 @@ component name** (`ExclamationTriangle`, `Arrow`, …). Every screen imports fro
 swapping in the real exported SVGs later is a one-file change. It also documents the
 imperfect matches — Figma's exclamation triangle is filled, lucide's is outline.
 
-**The bottom nav is the exception: those four are the real thing.** They're Material Symbols
-Rounded (`home` / `home-fill`, `search`, `cards_stack`, `person`), copied as official SVGs
-from the `@material-symbols/svg-400` npm package into `src/assets/icons` — real glyph
-outlines, not lucide look-alikes. Home swaps to the FILL variant when it's the active tab.
+**The bottom nav and the Home bell are the exception: those are the real thing.** They're
+Material Symbols Rounded (`home` / `home-fill`, `search`, `cards_stack`, `person`,
+`notifications`), copied as official SVGs from the `@material-symbols/svg-400` npm package
+into `src/assets/icons` — real glyph outlines, not lucide look-alikes. Home swaps to the FILL
+variant when it's the active tab. Add more the same way: install the package, copy the one
+file, uninstall (it ships thousands of SVGs).
 
 `MaterialIcon.tsx` paints them with `mask-image` + `background-color: currentColor` rather
 than `<img>`, so they still inherit the token colours. **The `url()` must stay quoted**: Vite
@@ -294,7 +296,22 @@ one with *"Published component not found"* — the icons come from a library tha
 published for Code Connect, and Code Connect needs an Organization/Enterprise plan. Don't
 retry it without checking those two prerequisites first.
 
-### 4.7 Fonts are fully self-hosted
+### 4.7 Two behaviours that aren't in the designs
+
+Both exist because a prototype has edges a design doesn't, and both are token-driven so they
+follow light/dark like everything else:
+
+- **`ScrollToTop`** (rendered once inside the router in `App.tsx`) resets scroll on every
+  route change. The browser doesn't do this for client-side navigation, so without it you
+  land on a new screen already scrolled. It replaced a per-page effect that only
+  `EventDetails` had.
+- **`Toast`** — the Registrations and Profile tabs aren't built, so instead of being dead
+  buttons they surface "… isn't available in this prototype yet." for ~2.6s. Uses the
+  inverted surface (`--bg-inverse` / `--text-inverse`) so it reads in both modes, sits above
+  the 64px nav, and its entrance animation is `motion-safe:` only. The Singpass button on
+  Event Details still uses a `window.alert` and could be moved onto this.
+
+### 4.8 Fonts are fully self-hosted
 
 Both typefaces now live in `src/assets/fonts` and there are **no external font requests**;
 the Google Fonts `<link>` was removed from `index.html`.

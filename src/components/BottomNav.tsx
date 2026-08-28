@@ -1,8 +1,11 @@
+import { useCallback, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import MaterialIcon, { type MaterialIconName } from './MaterialIcon'
+import Toast from './Toast'
 
 /*
- * Figma "Bottom nav" — 64px tall, px 24 / py 11, 20px icons, Body/XS labels
+ * Figma "Bottom nav" (2467:11512) — 64px tall, px 24, pt 12 / pb 16 (asymmetric,
+ * so the icons sit slightly high in the bar), 20px icons, Body/XS labels
  * (bold + primary when active). Icons are Material Symbols Rounded; Home uses
  * the FILL variant when it's the active tab, the rest stay unfilled.
  * Registrations and Profile aren't built yet, so they render as inert buttons
@@ -22,6 +25,8 @@ const tabs: {
 
 export default function BottomNav() {
   const { pathname } = useLocation()
+  const [toast, setToast] = useState<string | null>(null)
+  const dismiss = useCallback(() => setToast(null), [])
 
   const activeLabel =
     pathname === '/'
@@ -31,7 +36,9 @@ export default function BottomNav() {
         : ''
 
   return (
-    <nav className="fixed bottom-0 left-1/2 z-20 flex h-16 w-full max-w-[var(--container-max)] -translate-x-1/2 items-start justify-between border-t border-[var(--border)] bg-[var(--bg)] px-[var(--page-gutter)] py-[11px] shadow-[var(--shadow-sm)]">
+    <>
+      <Toast message={toast} onDismiss={dismiss} />
+      <nav className="fixed bottom-0 left-1/2 z-20 flex h-16 w-full max-w-[var(--container-max)] -translate-x-1/2 items-start justify-between border-t border-[var(--border)] bg-[var(--bg)] px-[var(--page-gutter)] pb-4 pt-3 shadow-[var(--shadow-sm)]">
       {tabs.map(({ label, icon, activeIcon, path }) => {
         const active = label === activeLabel
         const content = (
@@ -63,11 +70,17 @@ export default function BottomNav() {
             {content}
           </Link>
         ) : (
-          <button key={label} type="button" className={className}>
+          <button
+            key={label}
+            type="button"
+            className={className}
+            onClick={() => setToast(`${label} isn't available in this prototype yet.`)}
+          >
             {content}
           </button>
         )
       })}
-    </nav>
+      </nav>
+    </>
   )
 }

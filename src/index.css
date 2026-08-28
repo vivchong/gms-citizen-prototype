@@ -447,6 +447,19 @@ a {
   mask-composite: exclude;
 }
 
+/* Toast entrance — a short rise + fade, skipped under prefers-reduced-motion
+   (the utility that uses it is motion-safe:). */
+@keyframes gms-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Per-mode assets. The Home screen's two SportSG logos are different files,
    not one file recoloured, so the swap has to happen in markup. */
 .light-only {

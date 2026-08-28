@@ -1,4 +1,5 @@
 import { HashRouter, Routes, Route } from 'react-router-dom'
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import BrowseEvents from './pages/BrowseEvents'
 import EventDetails from './pages/EventDetails'
@@ -6,6 +7,7 @@ import EventDetails from './pages/EventDetails'
 export default function App() {
   return (
     <HashRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/browse" element={<BrowseEvents />} />
