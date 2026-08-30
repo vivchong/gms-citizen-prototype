@@ -27,7 +27,7 @@ export default function EventDetails() {
     return (
       <div className="flex min-h-svh flex-col items-center justify-center gap-4 bg-[var(--bg)] px-6 text-center text-[var(--text)]">
         <p>We couldn't find that event.</p>
-        <Link to="/browse" className="text-[var(--primary)] underline">
+        <Link to="/" className="text-[var(--primary)] underline">
           Back to browse events
         </Link>
       </div>

@@ -68,8 +68,8 @@ it in the other.**
 
 | Route | Screen | Figma |
 |---|---|---|
-| `/` | Home | `2501:18369` (dark, "FINAL") |
-| `/browse` | Basketball event listing | `2409:41347` / `2477:14852` |
+| `/` | Basketball event listing (landing) | `2409:41347` / `2477:14852` |
+| `/home` | Home | `2501:18369` (dark, "FINAL") |
 | `/events/:eventId` | Event details | `2487:15185` / `2472:13990` |
 
 The Home screen's five rasters live in `src/assets` and are imported (so Vite fingerprints

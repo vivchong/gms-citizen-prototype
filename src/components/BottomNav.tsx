@@ -17,8 +17,8 @@ const tabs: {
   activeIcon?: MaterialIconName
   path: string | null
 }[] = [
-  { label: 'Home', icon: 'home', activeIcon: 'home-fill', path: '/' },
-  { label: 'Explore', icon: 'search', path: '/browse' },
+  { label: 'Home', icon: 'home', activeIcon: 'home-fill', path: '/home' },
+  { label: 'Explore', icon: 'search', path: '/' },
   { label: 'Registrations', icon: 'cards_stack', path: null },
   { label: 'Profile', icon: 'person', path: null },
 ]
@@ -28,12 +28,12 @@ export default function BottomNav() {
   const [toast, setToast] = useState<string | null>(null)
   const dismiss = useCallback(() => setToast(null), [])
 
-  const activeLabel =
-    pathname === '/'
-      ? 'Home'
-      : pathname.startsWith('/browse') || pathname.startsWith('/events')
-        ? 'Explore'
-        : ''
+  // "/" is the Basketball listing, so Explore owns it along with the event pages.
+  const activeLabel = pathname.startsWith('/home')
+    ? 'Home'
+    : pathname === '/' || pathname.startsWith('/events') || pathname.startsWith('/browse')
+      ? 'Explore'
+      : ''
 
   return (
     <>

@@ -79,7 +79,7 @@ function TaskCard({ task }: { task: ActionTask }) {
 function EventRow({ event }: { event: UpcomingEvent }) {
   return (
     <Link
-      to="/browse"
+      to="/"
       className="relative flex w-full items-center gap-4 rounded-[var(--radius-sm)] bg-[var(--card-bg)] p-4 no-underline"
     >
       <div

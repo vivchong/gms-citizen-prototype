@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import BrowseEvents from './pages/BrowseEvents'
@@ -9,9 +9,12 @@ export default function App() {
     <HashRouter>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/browse" element={<BrowseEvents />} />
+        {/* The Basketball listing is the landing screen; Home is its own route. */}
+        <Route path="/" element={<BrowseEvents />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/events/:eventId" element={<EventDetails />} />
+        {/* /browse was the listing's route for a while — keep old links working. */}
+        <Route path="/browse" element={<Navigate to="/" replace />} />
       </Routes>
     </HashRouter>
   )

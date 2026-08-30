@@ -4,8 +4,8 @@ Hand-off notes between the Claude (Cowork) session and a local Claude Code sessi
 in `~/Documents/GMS/Citizen_Prototype`. Read this before changing anything — it captures
 decisions and constraints that aren't obvious from the code.
 
-**Last updated:** Home screen complete in light and dark; bottom nav now uses real Material
-Symbols Rounded glyphs; Home cards on `card background` with a per-mode task-card stroke.
+**Last updated:** `/` is the Basketball listing again and Home moved to `/home`; toast for
+unbuilt tabs; global scroll reset; bottom nav and Home bell on real Material Symbols.
 
 ---
 
@@ -14,14 +14,14 @@ Symbols Rounded glyphs; Home cards on `card background` with a per-mode task-car
 A React + Vite prototype of the citizen-facing Games Management System (GMS) screens for
 Pesta Sukan 2027 (SportSG). Three screens exist:
 
-- **Home** (`/`) — `src/pages/Home.tsx`. The bottom nav's first tab. Newest screen.
-- **Browse events** (`/browse`) — `src/pages/BrowseEvents.tsx`. **Considered finished by the
-  designer.** Don't restyle it without being asked.
+- **Browse events** (`/`) — `src/pages/BrowseEvents.tsx`. The landing screen. **Considered
+  finished by the designer.** Don't restyle it without being asked.
+- **Home** (`/home`) — `src/pages/Home.tsx`. The bottom nav's first tab.
 - **Event details** (`/events/:eventId`) — `src/pages/EventDetails.tsx`. Refined to match
   Figma exactly (see §4).
 
-> **Routes moved when Home was added.** `/` used to be the Basketball listing; it is now
-> Home, and the listing lives at `/browse`. Any old bookmark to `…/#/` lands on Home.
+> **`/` is the Basketball listing, not Home.** Home lives at `/home`. `/browse` was briefly
+> the listing's route and now redirects to `/`, so older links keep working.
 
 Figma source: `nlhBZQNIHe5BB7DyxNOWqs`, page **Handoff Screens** (`2019:10101`).
 
